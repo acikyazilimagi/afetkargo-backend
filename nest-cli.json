@@ -1,0 +1,10 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "assets": [
+      { "include": "common/services/emailer/templates/*.hbs", "watchAssets": true },
+      { "include": "**/*.txt" }
+    ]
+  }
+}
