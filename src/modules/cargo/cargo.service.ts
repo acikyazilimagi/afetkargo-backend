@@ -43,7 +43,7 @@ export class CargoService {
         cargo.receiverPassword = generateCode();
         cargo.cargoCode = generateCode();
         cargo.status = CARGO_STATUS.WAITING;
-        cargo.createdUser=user.id;
+        cargo.createdById=user.id;
         
 
         const savedCargo =  await this.cargoRepository.save(cargo);

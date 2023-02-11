@@ -17,7 +17,7 @@ import { FileUploadModule } from 'src/common/services/aws/file-upload.module';
         TypeOrmModule.forFeature([User,Role,UserRole]),
         forwardRef(() => AuthModule),
         CommonModule,
-        FileUploadModule,
+        // FileUploadModule,
     ],
     providers: [UserService, UserProfile,],
     controllers: [UserController],

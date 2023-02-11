@@ -19,18 +19,33 @@ export class AdminController {
         private adminService: AdminService,
     ) {}
 
-    @Get("me")
+    @Post("cargo")
     @HttpCode(HttpStatus.OK)
-    @Auth([RoleType.USER, RoleType.ADMIN])
+    @Auth([RoleType.ADMIN])
     @ApiOkResponse({ type: CargoDto , description: 'Get Cargo List' })
-    async getCurrentUser(
+    async getPaginatedCargos(
         @Body() filter: CargoFilterDto, 
         @AuthUser() user: User,
         @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
         @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
     ): Promise<CommonApiResponse<Pagination<CargoDto>>> {
         limit = limit > 100 ? 100 : limit;
-        const cargos = await this.adminService.getCargoPaginated({ page, limit, route:  'advertisement' }, user, filter);
+        const cargos = await this.adminService.getPaginatedCargos({ page, limit, route:  'advertisement' }, user, filter);
+        return CommonApiResponse.success<Pagination<CargoDto>>(cargos);
+    }
+
+    @Post("receiver")
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({ type: CargoDto , description: 'Get Cargo List' })
+    @Auth([RoleType.ADMIN])
+    async getCargoReceivers(
+        @Body() filter: CargoFilterDto, 
+        @AuthUser() user: User,
+        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
+        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
+    ): Promise<CommonApiResponse<Pagination<CargoDto>>> {
+        limit = limit > 100 ? 100 : limit;
+        const cargos = await this.adminService.getPaginatedCargos({ page, limit, route:  'advertisement' }, user, filter);
         return CommonApiResponse.success<Pagination<CargoDto>>(cargos);
     }
 }

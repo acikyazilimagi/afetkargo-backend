@@ -22,7 +22,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Not, Repository } from 'typeorm';
 import { UserRole } from './model/user-role.entity';
 import { Role } from './model/role.entity';
-import { FileUploadService } from 'src/common/services/aws/file-upload.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RoleDto } from './dto/role.dto';
 
@@ -38,7 +37,6 @@ export class UserService {
     @InjectMapper()
     private readonly mapper: Mapper,
     private readonly emailerService: EmailerService,
-    private readonly fileUploadService: FileUploadService,
   ) {}
 
   findByEmail(email: string): Promise<User> {

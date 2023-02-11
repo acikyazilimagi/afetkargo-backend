@@ -4,7 +4,7 @@ import { ApiConsumes, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { FileUploadService } from "./file-upload.service";
 
 @Controller("file-upload")
-@ApiTags('file-upload')
+// @ApiTags('file-upload')
 export class FileUploadController {
     constructor(
         private readonly fileUploadService: FileUploadService,

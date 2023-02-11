@@ -1,6 +1,9 @@
 import { BaseEntity } from "../../../common/base/base.entity";
-import { Column, Entity} from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne} from "typeorm";
 import { AutoMap } from "@automapper/classes";
+import { County } from "src/modules/common/model/county.entity";
+import { City } from "src/modules/common/model/city.entity";
+import { User } from "src/modules/user/model/user.entity";
 
 @Entity()
 export class Cargo extends BaseEntity{
@@ -51,6 +54,12 @@ export class Cargo extends BaseEntity{
     @Column({ default: true })
     @AutoMap()
     isActive: boolean;
+    
+    @CreateDateColumn({
+        type: 'timestamp',
+        default: () => 'CURRENT_TIMESTAMP(6)',
+    })
+    created_at: Date;
 
     @Column()
     @AutoMap()
@@ -70,13 +79,26 @@ export class Cargo extends BaseEntity{
 
     @Column({ nullable: true })
     @AutoMap()
-    countyId: string;
+    destinationCountyId: string;
 
     @Column({ nullable: true })
     @AutoMap()
-    cityId: string;
+    destinationCityId: string;
 
     @Column({ nullable: true })
     @AutoMap()
-    createdUser: string;
+    createdById: string;
+
+    //TODO county and city relations will be added
+    @ManyToOne(() => County)
+    @JoinColumn({ name: "destinationCountyId" })
+    destinationCounty: County;
+
+    @ManyToOne(() => City)
+    @JoinColumn({ name: "destinationCityId" })
+    destinationCity: City;
+
+    @ManyToOne(() => User)
+    @JoinColumn({ name: "createdById"})
+    createdBy: User;
 }
