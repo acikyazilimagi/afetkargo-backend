@@ -7,9 +7,12 @@ import { CargoDto } from './dto/cargo.dto';
 import { CargoLocationDto } from './dto/cargoLocation.dto';
 import { CargoResponse } from './dto/cargoResponse.dto';
 import { DriverCargoRequest } from './dto/driverCargoRequest.dto';
+import { ReceiverCargoRequest } from './dto/receiverCargoRequest.dto';
 import { FinishTransferRequest } from './dto/finishTransferRequest.dto';
 import { StartTransferRequest } from './dto/startTransferRequest.dto';
 import { CreateCargoDto } from './dto/createCargo.dto';
+import { DriverCargoResponse } from './dto/driverCargoResponse.dto';
+import { ReceiverCargoResponse } from './dto/receiverCargoResponse.dto';
 
 
 @UseGuards(AuthGuard('api-key'))
@@ -55,9 +58,23 @@ export class CargoController {
         type: CargoDto
     })
     // TODO Get requeste çevrilicek ve driver bilgileri middleware içeriisnde kontrol edilecek
-    async getDriverCargo(@Body() driverCargoRequest: DriverCargoRequest ): Promise<CommonApiResponse<CargoDto>> {
+    async getDriverCargo(@Body() driverCargoRequest: DriverCargoRequest ): Promise<CommonApiResponse<DriverCargoResponse>> {
         const cargo = await this.cargoService.getDriverCargo(driverCargoRequest);
-        return CommonApiResponse.success<CargoDto>(cargo);
+        return CommonApiResponse.success<DriverCargoResponse>(cargo);
+    }
+
+    @Post('/receiver/cargo')
+    @ApiOperation({ summary: 'Get Cargo By CargoId'})
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Get cargo by id',
+        type: CargoDto
+    })
+    // TODO Get requeste çevrilicek ve driver bilgileri middleware içeriisnde kontrol edilecek
+    async getReceiverCargo(@Body() receiverCargoRequest: ReceiverCargoRequest ): Promise<CommonApiResponse<ReceiverCargoResponse>> {
+        const cargo = await this.cargoService.getReceiverCargo(receiverCargoRequest);
+        return CommonApiResponse.success<ReceiverCargoResponse>(cargo);
     }
 
     @Post('/driver/set-location')
