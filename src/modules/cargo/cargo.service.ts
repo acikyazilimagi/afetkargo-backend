@@ -7,9 +7,12 @@ import { CargoDto } from './dto/cargo.dto';
 import { ReceiverDto } from './dto/receiver.dto';
 import { Cargo } from './model/cargo.entity';
 import { Receiver } from './model/receiver.entity';
-import { generateCode } from 'src/common/utils/utils';
+import { generateCode, setCargoStatus } from 'src/common/utils/utils';
 import { CargoResponse } from './dto/cargoResponse.dto';
 import { CARGO_STATUS } from 'src/common/constants';
+import { DriverCargoRequest } from './dto/driverCargoRequest.dto';
+import { FinishTransferRequest } from './dto/finishTransferRequest.dto';
+import { StartTransferRequest } from './dto/startTransferRequest.dto';
 
 @Injectable()
 export class CargoService {
@@ -50,44 +53,6 @@ export class CargoService {
 
     }
 
-    async getDriverCargo(driverPassword: string, plateNo: string): Promise<CargoDto> {
-        const cargo = await this.cargoRepository.findOne({where: {driverPassword: driverPassword, plateNo: plateNo}});
-
-        if(!cargo) { 
-            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
-        }
-
-        //TODO: create maps url
-
-        return this.mapper.map(cargo, Cargo, CargoDto);
-    }
-
-    async startTransfer(cargoId: string, driverPassword: string, plateNo: string): Promise<string> {
-        const cargo = await this.cargoRepository.findOne({where: {id: cargoId, driverPassword: driverPassword, plateNo: plateNo}});
-
-        if(!cargo) { 
-            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
-        }
-
-        cargo.status = CARGO_STATUS.TRANSFER;
-        await this.cargoRepository.save(cargo);
-
-        return cargo.id;
-    }
-
-    async finishTransfer(cargoId: string, receiverPassword: string, plateNo: string): Promise<string> {
-        const cargo = await this.cargoRepository.findOne({where: {id: cargoId, receiverPassword: receiverPassword, plateNo: plateNo}});
-
-        if(!cargo) { 
-            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
-        }
-
-        cargo.status = CARGO_STATUS.TRANSFERED_WITH_PROBLEM;
-        await this.cargoRepository.save(cargo);
-
-        return cargo.id;
-    }
-    
     async getCargo(cargoId: string): Promise<CargoDto> {
 
         const cargo = await this.cargoRepository.findOne({where: {id: cargoId}});
@@ -99,4 +64,52 @@ export class CargoService {
         return this.mapper.map(cargo, Cargo, CargoDto);
 
     }
+
+    async getDriverCargo(driverCargoRequest: DriverCargoRequest): Promise<CargoDto> {
+        const cargo = await this.cargoRepository.findOne({where: {driverPassword: driverCargoRequest.driverPassword, plateNo: driverCargoRequest.plateNo}});
+
+        if(!cargo) { 
+            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+        }
+
+        if((cargo.status != CARGO_STATUS.WAITING) && (cargo.status != CARGO_STATUS.TRANSFER)) {
+            throw new Error("Girilen bilgilere ait aktif kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+        }
+
+        //TODO: create maps url
+
+        return this.mapper.map(cargo, Cargo, CargoDto);
+    }
+
+    async startTransfer(startTransferRequest: StartTransferRequest): Promise<string> {
+        const cargo = await this.cargoRepository.findOne({where: { driverPassword: startTransferRequest.driverPassword, plateNo: startTransferRequest.plateNo}});
+
+        if(!cargo) { 
+            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+        }
+
+        cargo.status = CARGO_STATUS.TRANSFER;
+        await this.cargoRepository.save(cargo);
+
+        return cargo.id;
+    }
+
+    async finishTransfer( finishTransferRequest: FinishTransferRequest): Promise<string> {
+        const cargo = await this.cargoRepository.findOne({where: { receiverPassword: finishTransferRequest.receiverPassword, plateNo: finishTransferRequest.plateNo}});
+
+        if(!cargo) { 
+            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+        }
+
+        
+
+        cargo.status = setCargoStatus(finishTransferRequest.status);
+        await this.cargoRepository.save(cargo);
+
+        return cargo.id;
+    }
+
+    
+    
+    
 }

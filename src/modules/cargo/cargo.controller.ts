@@ -7,6 +7,9 @@ import { CargoDto } from './dto/cargo.dto';
 import { AuthUser } from 'src/common/decorators/auth-user.decorator';
 import { User } from '../user/model/user.entity';
 import { CargoResponse } from './dto/cargoResponse.dto';
+import { DriverCargoRequest } from './dto/driverCargoRequest.dto';
+import { FinishTransferRequest } from './dto/finishTransferRequest.dto';
+import { StartTransferRequest } from './dto/startTransferRequest.dto';
 
 
 @UseGuards(AuthGuard('api-key'))
@@ -17,7 +20,7 @@ export class CargoController {
         private cargoService: CargoService,
     ) {}
 
-    @Get('/driver/:plateNo/:driverPassword')
+    @Get('/driver/cargo')
     @ApiOperation({ summary: 'Get Cargo By CargoId'})
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
@@ -25,8 +28,8 @@ export class CargoController {
         description: 'Get cargo by id',
         type: CargoDto
     })
-    async getDriverCargo(@Param('driverPassword') driverPassword: string, @Param('plateNo') plateNo: string): Promise<CommonApiResponse<CargoDto>> {
-        const cargo = await this.cargoService.getDriverCargo(driverPassword, plateNo);
+    async getDriverCargo(@Body() driverCargoRequest: DriverCargoRequest ): Promise<CommonApiResponse<CargoDto>> {
+        const cargo = await this.cargoService.getDriverCargo(driverCargoRequest);
         return CommonApiResponse.success<CargoDto>(cargo);
     }
 
@@ -56,5 +59,29 @@ export class CargoController {
         return CommonApiResponse.success<CargoResponse>(cargo);
     }
 
-    
+    @Put('/driver/start-transfer')
+    @ApiOperation({ summary: 'Start Transfer'})
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Start transfer',
+        type: String
+    })
+    async startTransfer(@Body() startTransferRequest: StartTransferRequest): Promise<CommonApiResponse<string>> {
+        const cargoId = await this.cargoService.startTransfer(startTransferRequest);
+        return CommonApiResponse.success<string>(cargoId);
+    }
+
+    @Put('/receiver/finish-transfer')
+    @ApiOperation({ summary: 'Finish Transfer'})
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Finish transfer',
+        type: String
+    })
+    async finishTransfer(@Body() finishTransferRequest: FinishTransferRequest): Promise<CommonApiResponse<string>> {
+        const cargoId = await this.cargoService.finishTransfer(finishTransferRequest);
+        return CommonApiResponse.success<string>(cargoId);
+    }
 }
