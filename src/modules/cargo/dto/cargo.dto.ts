@@ -57,8 +57,8 @@ export class CargoDto extends BaseDto{
     receiverList: CreateReceiverDto[];
 
     @ApiProperty()
-    originMapsUrl: string;
+    countyId: string;
 
     @ApiProperty()
-    destinationMapsUrl: string;
+    cityId: string;
 }

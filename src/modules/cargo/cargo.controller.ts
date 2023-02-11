@@ -1,5 +1,5 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiOperation,ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation,ApiResponse,ApiSecurity } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CargoService } from './cargo.service';
 import { CommonApiResponse } from 'src/common/base/base-api-response.dto';
@@ -13,6 +13,9 @@ import { StartTransferRequest } from './dto/startTransferRequest.dto';
 import { CreateCargoDto } from './dto/createCargo.dto';
 import { DriverCargoResponse } from './dto/driverCargoResponse.dto';
 import { ReceiverCargoResponse } from './dto/receiverCargoResponse.dto';
+import { Auth } from 'src/common/decorators/auth.decorator';
+import { RoleType } from 'src/common/constants';
+import { AuthUser } from 'src/common/decorators/auth-user.decorator';
 
 
 @UseGuards(AuthGuard('api-key'))
@@ -26,6 +29,8 @@ export class CargoController {
     @Post('')
     @ApiOperation({ summary: 'Create Cargo'})
     @HttpCode(HttpStatus.OK)
+    @ApiSecurity('bearer')
+    @Auth([RoleType.USER, RoleType.ADMIN])
     @ApiResponse({
         status: HttpStatus.OK,
         description: 'Create cargo',

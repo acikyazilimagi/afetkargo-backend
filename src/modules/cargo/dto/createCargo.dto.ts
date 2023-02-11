@@ -51,4 +51,10 @@ export class CreateCargoDto{
     @ApiProperty({ isArray: true, type: CreateReceiverDto})
     @AutoMap()
     receiverList: CreateReceiverDto[];
+
+    @ApiProperty()
+    countyId: string;
+
+    @ApiProperty()
+    cityId: string;
 }
