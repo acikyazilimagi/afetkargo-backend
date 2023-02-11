@@ -1,7 +1,7 @@
 export enum CARGO_STATUS {
     WAITING = 1,
-    ON_THE_WAY = 2,
-    OK = 3,
+    TRANSFER = 2,
+    TRANSFERED = 3,
     CANCEL = 4,
-    OK_WITH_PROBLEM = 5,
+    TRANSFERED_WITH_PROBLEM = 5,
 }

@@ -62,7 +62,41 @@ export class CargoService {
         return this.mapper.map(cargo, Cargo, CargoDto);
     }
 
+    async startTransfer(cargoId: string, driverPassword: string, plateNo: string): Promise<string> {
+        const cargo = await this.cargoRepository.findOne({where: {id: cargoId, driverPassword: driverPassword, plateNo: plateNo}});
 
+        if(!cargo) { 
+            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+        }
+
+        cargo.status = CARGO_STATUS.TRANSFER;
+        await this.cargoRepository.save(cargo);
+
+        return cargo.id;
+    }
+
+    async finishTransfer(cargoId: string, receiverPassword: string, plateNo: string): Promise<string> {
+        const cargo = await this.cargoRepository.findOne({where: {id: cargoId, receiverPassword: receiverPassword, plateNo: plateNo}});
+
+        if(!cargo) { 
+            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+        }
+
+        cargo.status = CARGO_STATUS.TRANSFERED_WITH_PROBLEM;
+        await this.cargoRepository.save(cargo);
+
+        return cargo.id;
+    }
     
-    
+    async getCargo(cargoId: string): Promise<CargoDto> {
+
+        const cargo = await this.cargoRepository.findOne({where: {id: cargoId}});
+
+        if(!cargo) { 
+            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+        }
+
+        return this.mapper.map(cargo, Cargo, CargoDto);
+
+    }
 }

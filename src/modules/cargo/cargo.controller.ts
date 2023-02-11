@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation,ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CargoService } from './cargo.service';
@@ -25,8 +25,21 @@ export class CargoController {
         description: 'Get cargo by id',
         type: CargoDto
     })
-    async getAdvertisementById(@Param('driverPassword') driverPassword: string, @Param('plateNo') plateNo: string): Promise<CommonApiResponse<CargoDto>> {
+    async getDriverCargo(@Param('driverPassword') driverPassword: string, @Param('plateNo') plateNo: string): Promise<CommonApiResponse<CargoDto>> {
         const cargo = await this.cargoService.getDriverCargo(driverPassword, plateNo);
+        return CommonApiResponse.success<CargoDto>(cargo);
+    }
+
+    @Get(':id')
+    @ApiOperation({ summary: 'Get Cargo By CargoId'})
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Get cargo by id',
+        type: CargoDto
+    })
+    async getCargoById(@Param('id') id: string): Promise<CommonApiResponse<CargoDto>> {
+        const cargo = await this.cargoService.getCargo(id);
         return CommonApiResponse.success<CargoDto>(cargo);
     }
 
