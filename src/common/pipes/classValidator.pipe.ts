@@ -9,6 +9,7 @@ export class ValidationPipe implements PipeTransform<any> {
       return value;
     }
     const object = plainToInstance(metatype, value);
+    console.log("validator value: ", value);
     const errors = await validate(object);
     if (errors.length > 0) {
         var messages = [];
