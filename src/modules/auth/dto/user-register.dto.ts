@@ -39,12 +39,6 @@ export class UserRegisterDto {
   password: string;
 
   @ApiProperty()
-  @AutoMap()
-  @MinLength(10)
-  @MaxLength(11)
-  registeryNo: string;
-
-  @ApiProperty()
   @IsString()
   @MaxLength(50)
   @AutoMap()

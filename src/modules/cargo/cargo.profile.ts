@@ -11,6 +11,8 @@ import { Receiver } from "./model/receiver.entity";
 import { ReceiverDto } from "./dto/receiver.dto";
 import { CreateReceiverDto } from "./dto/createReceiver.dto";
 import { CreateCargoDto } from "./dto/createCargo.dto";
+import { DriverCargoResponse  } from "./dto/driverCargoResponse.dto";
+import { ReceiverCargoResponse } from "./dto/receiverCargoResponse.dto";
 
 @Injectable()
 export class CargoProfile extends AutomapperProfile {
@@ -22,6 +24,8 @@ export class CargoProfile extends AutomapperProfile {
         return (mapper) => {
             createMap(mapper, BaseEntity, BaseDto);
             createMap(mapper, Cargo, CargoDto);
+            createMap(mapper, Cargo, DriverCargoResponse);
+            createMap(mapper, Cargo, ReceiverCargoResponse);
             createMap(mapper, CreateCargoDto, Cargo);
             createMap(mapper, Receiver, ReceiverDto);
             createMap(mapper, CreateReceiverDto, Receiver);

@@ -1,22 +1,13 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsLatitude, IsLongitude, IsPhoneNumber } from "class-validator";
-import { CreateReceiverDto } from "./createReceiver.dto";
+import { BaseDto } from "src/common/base/base.dto";
+import { ReceiverDto } from "./receiver.dto";
 
-export class CreateCargoDto{
+export class ReceiverCargoResponse extends BaseDto{
 
     @ApiProperty()
     @AutoMap()
     plateNo: string;
-
-    @ApiProperty()
-    @AutoMap()
-    driverFullname: string;
-
-    @ApiProperty()
-    @AutoMap()
-    @IsPhoneNumber("TR")
-    driverPhone: string;
 
     @ApiProperty()
     @AutoMap()
@@ -32,12 +23,10 @@ export class CreateCargoDto{
 
     @ApiProperty()
     @AutoMap()
-    @IsLatitude()
     originLat: number;
 
     @ApiProperty()
     @AutoMap()
-    @IsLongitude()
     originLong: number;
 
     @ApiProperty()
@@ -45,16 +34,22 @@ export class CreateCargoDto{
     partialCount: number;
 
     @ApiProperty()
+    thirdPartyToken: string;
+
+    @ApiProperty()
     @AutoMap()
     companyName: string;
 
-    @ApiProperty({ isArray: true, type: CreateReceiverDto})
+    @ApiProperty()
     @AutoMap()
-    receiverList: CreateReceiverDto[];
+    isActive: boolean;
 
     @ApiProperty()
-    countyId: string;
+    receiverList: ReceiverDto[];
 
     @ApiProperty()
-    cityId: string;
+    lat: number;
+
+    @ApiProperty()
+    long: number;
 }
