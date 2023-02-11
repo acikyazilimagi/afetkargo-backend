@@ -29,12 +29,7 @@ export class AdminService {
   async getPaginatedCargos(options: IPaginationOptions, user: User, filter: CargoFilterDto ): Promise<Pagination<CargoDto>> {
 
     const queryBuilder = this.cargoRepository.createQueryBuilder('cargo');
-    // queryBuilder.where('adv.ownerUserId = :ownerUserId', { ownerUserId: user.id });
     queryBuilder.leftJoinAndMapOne('cargo.createdBy', User, 'user', 'user.id = cargo.createdById');
-    // queryBuilder.leftJoinAndMapOne('adv.advertisementStatus', AdvertisementStatus, 'advStatus', 'advStatus.id = adv.advertisementStatusId')
-    // queryBuilder.leftJoinAndMapOne('adv.advertisementType', AdvertisementType, 'advType', 'advType.id = adv.advertisementTypeId')
-    // queryBuilder.leftJoinAndMapOne('adv.loadType', LoadType, 'loadType', 'loadType.id = adv.loadTypeId');
-    // queryBuilder.leftJoinAndMapOne('adv.materialType', MaterialType, 'materialType', 'materialType.id = adv.materialTypeId');
     queryBuilder.leftJoinAndMapOne('cargo.destinationCity', City, 'destinationCity', 'destinationCity.id = cargo.destinationCityId');
     queryBuilder.leftJoinAndMapOne('cargo.destinationCounty', County, 'destinationCounty', 'destinationCounty.id = cargo.destinationCountyId');
 

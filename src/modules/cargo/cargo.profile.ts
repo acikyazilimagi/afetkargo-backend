@@ -13,6 +13,7 @@ import { CreateReceiverDto } from "./dto/createReceiver.dto";
 import { CreateCargoDto } from "./dto/createCargo.dto";
 import { DriverCargoResponse  } from "./dto/driverCargoResponse.dto";
 import { ReceiverCargoResponse } from "./dto/receiverCargoResponse.dto";
+import { CreateCargoLocationDto } from "./dto/createCargoLocation.dto";
 
 @Injectable()
 export class CargoProfile extends AutomapperProfile {
@@ -30,7 +31,7 @@ export class CargoProfile extends AutomapperProfile {
             createMap(mapper, Receiver, ReceiverDto);
             createMap(mapper, CreateReceiverDto, Receiver);
             createMap(mapper, CargoLocation, CargoLocationDto);
-            createMap(mapper, CargoLocationDto, CargoLocation);
+            createMap(mapper, CreateCargoLocationDto, CargoLocation);
         }
     }
 }

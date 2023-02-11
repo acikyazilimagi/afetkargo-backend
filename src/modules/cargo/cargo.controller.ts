@@ -17,6 +17,7 @@ import { Auth } from 'src/common/decorators/auth.decorator';
 import { RoleType } from 'src/common/constants';
 import { AuthUser } from 'src/common/decorators/auth-user.decorator';
 import { User } from '../user/model/user.entity';
+import { CreateCargoLocationDto } from './dto/createCargoLocation.dto';
 
 
 @UseGuards(AuthGuard('api-key'))
@@ -91,8 +92,8 @@ export class CargoController {
         description: 'Set location',
         type: CargoLocationDto
     })
-    async setLocation(@Body() cargoLocationDto: CargoLocationDto): Promise<CommonApiResponse<string>> {
-        const cargo = await this.cargoService.setLocation(cargoLocationDto);
+    async setLocation(@Body() createCargoLocationDto: CreateCargoLocationDto): Promise<CommonApiResponse<string>> {
+        const cargo = await this.cargoService.setLocation(createCargoLocationDto);
         return CommonApiResponse.success<string>(cargo);
     }
 

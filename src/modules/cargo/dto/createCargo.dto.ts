@@ -1,6 +1,6 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsLatitude, IsLongitude, IsPhoneNumber } from "class-validator";
+import { IsLatitude, IsLongitude, IsNumber, IsPhoneNumber } from "class-validator";
 import { CreateReceiverDto } from "./createReceiver.dto";
 
 export class CreateCargoDto{
@@ -42,6 +42,7 @@ export class CreateCargoDto{
 
     @ApiProperty()
     @AutoMap()
+    @IsNumber({}, {message: "partialCount can not be null"})
     partialCount: number;
 
     @ApiProperty()

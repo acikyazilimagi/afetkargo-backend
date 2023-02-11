@@ -20,11 +20,11 @@ import { CreateReceiverDto } from './dto/createReceiver.dto';
 import { DriverCargoResponse } from './dto/driverCargoResponse.dto';
 import { ReceiverCargoResponse } from './dto/receiverCargoResponse.dto';
 import { User } from '../user/model/user.entity';
+import { CreateCargoLocationDto } from './dto/createCargoLocation.dto';
 
 @Injectable()
 export class CargoService {
     constructor (
-       
         @InjectMapper()
         private readonly mapper: Mapper,
         @InjectRepository(Cargo)
@@ -44,11 +44,7 @@ export class CargoService {
         cargo.cargoCode = generateCode();
         cargo.status = CARGO_STATUS.WAITING;
         cargo.createdById=user.id;
-        
-
         const savedCargo =  await this.cargoRepository.save(cargo);
-
-        console.log("Saved Cargo detail: ", savedCargo);
 
         if (createCargoDto.receiverList) {
             const receivers = this.mapper.mapArray(createCargoDto.receiverList, CreateReceiverDto, Receiver );
@@ -61,21 +57,15 @@ export class CargoService {
         cargoResponse.cargoCode = savedCargo.cargoCode;
         cargoResponse.driverPassword = savedCargo.driverPassword;
         cargoResponse.receiverPassword = savedCargo.receiverPassword;
-
         return cargoResponse;
-
     }
 
     async getCargo(cargoId: string): Promise<CargoDto> {
-
         const cargo = await this.cargoRepository.findOne({where: {id: cargoId}});
-
         if(!cargo) { 
             throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
         }
-
         return this.mapper.map(cargo, Cargo, CargoDto);
-
     }
 
     async getDriverCargo(driverCargoRequest: DriverCargoRequest): Promise<DriverCargoResponse> {
@@ -90,11 +80,8 @@ export class CargoService {
         }
 
         let driverResponse=this.mapper.map(cargo, Cargo, DriverCargoResponse);
-
         let receiverList =await this.receiverRepository.find({where:{cargoId:cargo.id}});
-
         driverResponse.receiverList=receiverList;
-
         return driverResponse;
     }
 
@@ -110,14 +97,12 @@ export class CargoService {
         }
 
         let receiverResponse =this.mapper.map(cargo, Cargo, ReceiverCargoResponse);
-
         let location = await this.cargoLocationRepository.findOne({where:{cargoId:cargo.id},order:{createdAt:"DESC"}});
         if(!location){
             throw new NotFoundException("Kargoya ait lokasyon bilgisi bulunamadı. Lütfen tekrar deneyin.");
         }
         receiverResponse.lat=location.lat;
         receiverResponse.long=location.long;
-
         return receiverResponse;
     }
 
@@ -141,16 +126,14 @@ export class CargoService {
             throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
         }
 
-        
-
         cargo.status = setCargoStatus(finishTransferRequest.status);
         await this.cargoRepository.save(cargo);
 
         return cargo.id;
     }
 
-    async setLocation (cargoLocationDto: CargoLocationDto) : Promise<string> {
-        let location = this.mapper.map(cargoLocationDto, CargoLocationDto, CargoLocation);
+    async setLocation (createCargoLocationDto: CreateCargoLocationDto) : Promise<string> {
+        let location = this.mapper.map(createCargoLocationDto, CreateCargoLocationDto, CargoLocation);
         const savedLocation =  await this.cargoLocationRepository.save(location);
         return savedLocation.id;
     }
