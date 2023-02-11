@@ -11,6 +11,14 @@ export class ReceiverCargoResponse extends BaseDto{
 
     @ApiProperty()
     @AutoMap()
+    driverFullname: string;
+
+    @ApiProperty()
+    @AutoMap()
+    driverPhone: string;
+
+    @ApiProperty()
+    @AutoMap()
     inventory: string;
 
     @ApiProperty()
@@ -32,9 +40,6 @@ export class ReceiverCargoResponse extends BaseDto{
     @ApiProperty()
     @AutoMap()
     partialCount: number;
-
-    @ApiProperty()
-    thirdPartyToken: string;
 
     @ApiProperty()
     @AutoMap()
