@@ -4,9 +4,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CargoDto } from './dto/cargo.dto';
+import { CargoLocationDto } from './dto/cargoLocation.dto';
 import { ReceiverDto } from './dto/receiver.dto';
 import { Cargo } from './model/cargo.entity';
 import { Receiver } from './model/receiver.entity';
+import { CargoLocation } from './model/cargo-location.entity';
 import { generateCode, setCargoStatus } from 'src/common/utils/utils';
 import { CargoResponse } from './dto/cargoResponse.dto';
 import { CARGO_STATUS } from 'src/common/constants';
@@ -24,6 +26,8 @@ export class CargoService {
         private readonly cargoRepository: Repository<Cargo>,
         @InjectRepository(Receiver)
         private readonly receiverRepository: Repository<Receiver>,
+        @InjectRepository(CargoLocation)
+        private readonly cargoLocationRepository: Repository<CargoLocation>,
     ) {}
 
     async createCargo (cargoDto: CargoDto) : Promise<CargoResponse> {
@@ -109,7 +113,11 @@ export class CargoService {
         return cargo.id;
     }
 
-    
+    async setLocation (cargoLocationDto: CargoLocationDto) : Promise<string> {
+        let location = this.mapper.map(cargoLocationDto, CargoLocationDto, CargoLocation);
+        const savedLocation =  await this.cargoLocationRepository.save(location);
+        return savedLocation.id;
+    }
     
     
 }

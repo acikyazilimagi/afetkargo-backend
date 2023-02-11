@@ -5,6 +5,8 @@ import { BaseDto } from "../../common/base/base.dto";
 import { BaseEntity } from "typeorm";
 import { Cargo } from "./model/cargo.entity";
 import { CargoDto } from "./dto/cargo.dto";
+import { CargoLocation } from "./model/cargo-location.entity";
+import { CargoLocationDto } from "./dto/cargoLocation.dto";
 import { Receiver } from "./model/receiver.entity";
 import { ReceiverDto } from "./dto/receiver.dto";
 
@@ -21,6 +23,8 @@ export class CargoProfile extends AutomapperProfile {
             createMap(mapper, CargoDto, Cargo);
             createMap(mapper, Receiver, ReceiverDto);
             createMap(mapper, ReceiverDto, Receiver);
+            createMap(mapper, CargoLocation, CargoLocationDto);
+            createMap(mapper, CargoLocationDto, CargoLocation);
         }
     }
 }
