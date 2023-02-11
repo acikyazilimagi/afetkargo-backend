@@ -33,7 +33,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
-      'http://ec2-54-93-232-34.eu-central-1.compute.amazonaws.com/',
+      'https://api-test.afetkargo.com/',
     ],
     methods: ["GET", "POST","PUT","DELETE"],
   });

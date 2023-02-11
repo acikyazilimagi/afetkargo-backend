@@ -70,7 +70,7 @@ export class CargoController {
     }
 
     @Post('/receiver/cargo')
-    @ApiOperation({ summary: 'Get Cargo By CargoId'})
+    @ApiOperation({ summary: 'Get Receiver Cargo'})
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
         status: HttpStatus.OK,
