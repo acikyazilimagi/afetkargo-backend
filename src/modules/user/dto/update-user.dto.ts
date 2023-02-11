@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 export class UpdateUserDto {
   
   @ApiProperty()
-  userId: number;
+  userId: string;
 
   @ApiProperty({example: 'John'})
   @IsString()

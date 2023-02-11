@@ -30,7 +30,7 @@ export class UserController {
         description: 'Get user by id',
         type: UserDto
     })
-    getUser(@Param('id') userId: number): Promise<CommonApiResponse<UserDto>> {
+    getUser(@Param('id') userId: string): Promise<CommonApiResponse<UserDto>> {
         return this.userService.getUser(userId);
     }
 

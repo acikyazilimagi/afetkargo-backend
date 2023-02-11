@@ -19,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(args: {
-        userId: number,
+        userId: string,
         type: TokenType,
         // role: string
     }): Promise<User>{

@@ -62,7 +62,7 @@ export class UserService {
     return createdUser;
   }
 
-  async getUser(userId: number): Promise<CommonApiResponse<UserDto>> {
+  async getUser(userId: string): Promise<CommonApiResponse<UserDto>> {
     const user = await this.userRepository.findOne({ id: userId });
     return CommonApiResponse.success(this.mapper.map(user, UserDto, User));
   }
@@ -130,7 +130,7 @@ export class UserService {
   }
 
   private async createUserRole(
-    userId: number,
+    userId: string,
     roleId: number,
   ): Promise<UserRole> {
     try {
@@ -141,7 +141,7 @@ export class UserService {
   }
 
   private async createBasicRole(
-    userId: number,
+    userId: string,
     roleId: number,
   ): Promise<UserRole> {
     try {

@@ -4,7 +4,7 @@ import { ApiProperty } from "@nestjs/swagger";
 export class BaseDto {
     @ApiProperty()
     @AutoMap()
-    id: number;
+    id: string;
     
     @ApiProperty()
     @AutoMap()

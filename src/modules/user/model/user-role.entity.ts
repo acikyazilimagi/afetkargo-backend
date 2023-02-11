@@ -6,7 +6,7 @@ import { User } from "./user.entity";
 @Entity()
 export class UserRole extends BaseEntity {
     @Column()
-    userId: number;
+    userId: string;
 
     @Column()
     roleId: number;

@@ -61,8 +61,7 @@ export class AuthService {
     }
 
     async createAccessToken(data: {
-        userId: number,
-
+        userId: string,
     }): Promise<TokenPayloadDto> {
         return new TokenPayloadDto({
             expiresIn: 36000,

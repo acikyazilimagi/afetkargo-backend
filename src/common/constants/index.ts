@@ -5,7 +5,6 @@ export * from "./language-code";
 export * from "./data-type";
 export * from "./response-code";
 export * from "./mime-type";
-export * from './document';
-export * from './advertisement';
+export * from './cargo-status';
 export * from './order-type';
 export * from './offer';

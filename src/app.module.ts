@@ -11,6 +11,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import * as dotenv from 'dotenv';
 import { dotEnvOptions } from './common/config/dotenv-options';
+import { CargoModule } from './modules/cargo/cargo.module';
 dotenv.config(dotEnvOptions);
 
 @Module({
@@ -24,6 +25,7 @@ dotenv.config(dotEnvOptions);
     LoggerModule,
     EmailerModule,
     CommonModule,
+    CargoModule
   ],
   providers: [
     {

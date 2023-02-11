@@ -3,14 +3,13 @@ import { AutomapperProfile, InjectMapper } from "@automapper/nestjs";
 import { Injectable } from "@nestjs/common";
 import { BaseDto } from "../../common/base/base.dto";
 import { BaseEntity } from "typeorm";
-import { CityDto } from "./dto/city.dto";
-import { CountyDto } from "./dto/county.dto";
-import { City } from "./model/city.entity";
-import { County } from "./model/county.entity";
-import { Cargo } from "../cargo/model/cargo.entity";
+import { Cargo } from "./model/cargo.entity";
+import { CargoDto } from "./dto/cargo.dto";
+import { Receiver } from "./model/receiver.entity";
+import { ReceiverDto } from "./dto/receiver.dto";
 
 @Injectable()
-export class CommonProfile extends AutomapperProfile {
+export class CargoProfile extends AutomapperProfile {
     constructor(@InjectMapper() mapper: Mapper) {
         super(mapper);
     }
@@ -18,8 +17,10 @@ export class CommonProfile extends AutomapperProfile {
     override get profile() {
         return (mapper) => {
             createMap(mapper, BaseEntity, BaseDto);
-            createMap(mapper, City, CityDto);
-            createMap(mapper, County, CountyDto);
+            createMap(mapper, Cargo, CargoDto);
+            createMap(mapper, CargoDto, Cargo);
+            createMap(mapper, Receiver, ReceiverDto);
+            createMap(mapper, ReceiverDto, Receiver);
         }
     }
 }

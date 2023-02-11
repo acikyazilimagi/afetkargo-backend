@@ -4,9 +4,9 @@ import { CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "type
 
 export class BaseEntity {
 
-    @PrimaryGeneratedColumn()
+    @PrimaryGeneratedColumn('uuid')
     @AutoMap()
-    id: number;
+    id: string;
 
     @CreateDateColumn({
         type: 'timestamp',
