@@ -93,6 +93,7 @@ export class CargoController {
         type: CargoLocationDto
     })
     async setLocation(@Body() createCargoLocationDto: CreateCargoLocationDto): Promise<CommonApiResponse<string>> {
+        console.log("create cargo location dto response body: ", createCargoLocationDto);
         const cargo = await this.cargoService.setLocation(createCargoLocationDto);
         return CommonApiResponse.success<string>(cargo);
     }
