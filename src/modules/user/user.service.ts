@@ -64,7 +64,7 @@ export class UserService {
 
   async getUser(userId: string): Promise<CommonApiResponse<UserDto>> {
     const user = await this.userRepository.findOne({ id: userId });
-    return CommonApiResponse.success(this.mapper.map(user, UserDto, User));
+    return CommonApiResponse.success(this.mapper.map(user, User, UserDto));
   }
 
   async activateUser(token: string): Promise<CommonApiResponse<void>> {

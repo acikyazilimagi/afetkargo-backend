@@ -19,6 +19,7 @@ import { CreateCargoDto } from './dto/createCargo.dto';
 import { CreateReceiverDto } from './dto/createReceiver.dto';
 import { DriverCargoResponse } from './dto/driverCargoResponse.dto';
 import { ReceiverCargoResponse } from './dto/receiverCargoResponse.dto';
+import { User } from '../user/model/user.entity';
 
 @Injectable()
 export class CargoService {
@@ -34,7 +35,7 @@ export class CargoService {
         private readonly cargoLocationRepository: Repository<CargoLocation>,
     ) {}
 
-    async createCargo (createCargoDto: CreateCargoDto) : Promise<CargoResponse> {
+    async createCargo (user: User,createCargoDto: CreateCargoDto) : Promise<CargoResponse> {
         let cargo = this.mapper.map(createCargoDto, CreateCargoDto,Cargo);
 
         // TODO cargo code for unique control 
@@ -42,6 +43,7 @@ export class CargoService {
         cargo.receiverPassword = generateCode();
         cargo.cargoCode = generateCode();
         cargo.status = CARGO_STATUS.WAITING;
+        cargo.createdUser=user.id;
         
 
         const savedCargo =  await this.cargoRepository.save(cargo);

@@ -68,11 +68,15 @@ export class Cargo extends BaseEntity{
     @AutoMap()
     status: number;
 
-    @Column()
+    @Column({ nullable: true })
     @AutoMap()
     countyId: string;
 
-    @Column()
+    @Column({ nullable: true })
     @AutoMap()
     cityId: string;
+
+    @Column({ nullable: true })
+    @AutoMap()
+    createdUser: string;
 }

@@ -61,4 +61,8 @@ export class CargoDto extends BaseDto{
 
     @ApiProperty()
     cityId: string;
+
+    @ApiProperty()
+    @AutoMap()
+    createdUser: string;
 }

@@ -16,6 +16,7 @@ import { ReceiverCargoResponse } from './dto/receiverCargoResponse.dto';
 import { Auth } from 'src/common/decorators/auth.decorator';
 import { RoleType } from 'src/common/constants';
 import { AuthUser } from 'src/common/decorators/auth-user.decorator';
+import { User } from '../user/model/user.entity';
 
 
 @UseGuards(AuthGuard('api-key'))
@@ -36,8 +37,8 @@ export class CargoController {
         description: 'Create cargo',
         type: CargoResponse
     })
-    async createCargo(@Body() cargoDto: CreateCargoDto): Promise<CommonApiResponse<CargoResponse>> {
-        const cargo = await this.cargoService.createCargo(cargoDto);
+    async createCargo(@Body() cargoDto: CreateCargoDto,@AuthUser() user: User): Promise<CommonApiResponse<CargoResponse>> {
+        const cargo = await this.cargoService.createCargo(user,cargoDto);
         return CommonApiResponse.success<CargoResponse>(cargo);
     }
     

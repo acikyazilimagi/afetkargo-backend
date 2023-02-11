@@ -1,4 +1,4 @@
-import { IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsPhoneNumber, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto {
@@ -15,16 +15,13 @@ export class CreateUserDto {
   @MaxLength(50)
   surname: string;
 
-  // TODO - Check REGEX for email
   @ApiProperty()
   @IsString()
-  @Matches(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+  @IsEmail()
   email: string;
 
-  // TODO - Check REGEX for phone number
   @ApiProperty()
-  @MaxLength(12)
-  @MinLength(12)
+  @IsPhoneNumber("TR")
   phone: string;
 
   @ApiProperty()
@@ -36,8 +33,4 @@ export class CreateUserDto {
   })
   password: string;
 
-  @ApiProperty()
-  @MinLength(11)
-  @MaxLength(11)
-  registeryNo: number;
 }

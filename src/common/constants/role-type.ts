@@ -1,6 +1,6 @@
 export enum RoleType {
-    RECEIVER = 'ALICI',
-    DRIVER = 'ARAÇ SURUCUSU',
-    USER = 'KARGO SAHIBI',
-    ADMIN = 'YONETICI',
+    RECEIVER = 'receiver',
+    DRIVER = 'driver',
+    USER = 'user',
+    ADMIN = 'admin',
 }
