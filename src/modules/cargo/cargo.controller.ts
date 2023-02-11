@@ -56,11 +56,11 @@ export class CargoController {
     }
     
     @Post('/driver/cargo')
-    @ApiOperation({ summary: 'Get Cargo By CargoId'})
+    @ApiOperation({ summary: 'Get Cargo Driver Info'})
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
         status: HttpStatus.OK,
-        description: 'Get cargo by id',
+        description: 'Get Cargo By Driver Info',
         type: CargoDto
     })
     // TODO Get requeste çevrilicek ve driver bilgileri middleware içeriisnde kontrol edilecek
@@ -70,7 +70,7 @@ export class CargoController {
     }
 
     @Post('/receiver/cargo')
-    @ApiOperation({ summary: 'Get Receiver Cargo'})
+    @ApiOperation({ summary: 'Get Receiver Cargo By Receiver Info'})
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
         status: HttpStatus.OK,
