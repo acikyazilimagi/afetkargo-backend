@@ -89,7 +89,6 @@ export class Cargo extends BaseEntity{
     @AutoMap()
     createdById: string;
 
-    //TODO county and city relations will be added
     @ManyToOne(() => County)
     @JoinColumn({ name: "destinationCountyId" })
     destinationCounty: County;

@@ -30,7 +30,13 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document, { swaggerOptions: { persistAuthorization: true }, customSiteTitle: 'Afet Kargo API Doc'}) 
 
   app.use(morganLogger);
-  app.enableCors();
+  app.enableCors({
+    origin: [
+      'http://localhost:3000',
+      'http://ec2-54-93-232-34.eu-central-1.compute.amazonaws.com/',
+    ],
+    methods: ["GET", "POST","PUT","DELETE"],
+  });
   app.use(helmet());
   await app.listen(process.env.PORT);
 }
