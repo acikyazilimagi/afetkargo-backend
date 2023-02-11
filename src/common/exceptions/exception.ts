@@ -14,7 +14,7 @@ export type CreateExceptionPayload<TData> = {
     
     private constructor(codeDescription: CodeDescription, overrideMessage?: string, data?: TData) {
       super();
-      
+      console.log("error data : ", data);
       this.name = this.constructor.name;
       this.code = codeDescription.code;
       this.data = data;
@@ -26,5 +26,4 @@ export type CreateExceptionPayload<TData> = {
     public static new<TData>(payload: CreateExceptionPayload<TData>): Exception<TData> {
       return new Exception(payload.code, payload.overrideMessage, payload.data);
     }
-    
   }

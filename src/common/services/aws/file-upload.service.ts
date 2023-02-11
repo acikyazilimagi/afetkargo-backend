@@ -1,4 +1,4 @@
-import { Req, Res, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as S3 from 'aws-sdk/clients/s3'
 import { v4 as uuid } from 'uuid';
 
@@ -15,17 +15,11 @@ export class FileUploadService {
   }
 
   async uploadFile(file: Express.Multer.File): Promise<string> {
-    
-    
-
     const params = {
       Bucket: process.env.AWS_S3_BUCKET_NAME,
       Body: file.buffer,
       Key: uuid() + '.' + file.mimetype.split('/')[1],
     };
-
-    console.log("check params",params);
-
     const response = await this.s3.upload(params).promise();
     return response.Location;
   }

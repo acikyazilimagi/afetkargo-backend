@@ -5,6 +5,7 @@ import { Exception } from "../exceptions/exception";
 import { Request, Response } from "express";
 import { Logger } from "winston";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { isArray, isObject } from "class-validator";
 
 @Catch()
 export class NestHttpExceptionFilter implements ExceptionFilter {
@@ -44,10 +45,12 @@ export class NestHttpExceptionFilter implements ExceptionFilter {
             null);
         }
         if(error instanceof BadRequestException) {
+          console.log("Error get response: ", error.getResponse())
+          console.log("error message: ", error)
           errorResponse = CommonApiResponse.error(
             ResponseCode.BAD_REQUEST_ERROR.code, 
-            error.message ? error.message : ResponseCode.BAD_REQUEST_ERROR.message, 
-            null);
+            error.getResponse()["error"] ?? ResponseCode.BAD_REQUEST_ERROR.message, 
+            isObject(error.getResponse()) ? error.getResponse()["message"] : null);
         }
         if(error instanceof NotFoundException) {
           errorResponse = CommonApiResponse.error(
