@@ -4,6 +4,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { CargoService } from './cargo.service';
 import { CommonApiResponse } from 'src/common/base/base-api-response.dto';
 import { CargoDto } from './dto/cargo.dto';
+import { CargoLocationDto } from './dto/cargoLocation.dto';
 import { CargoResponse } from './dto/cargoResponse.dto';
 import { DriverCargoRequest } from './dto/driverCargoRequest.dto';
 import { FinishTransferRequest } from './dto/finishTransferRequest.dto';
@@ -55,6 +56,19 @@ export class CargoController {
     async getDriverCargo(@Body() driverCargoRequest: DriverCargoRequest ): Promise<CommonApiResponse<CargoDto>> {
         const cargo = await this.cargoService.getDriverCargo(driverCargoRequest);
         return CommonApiResponse.success<CargoDto>(cargo);
+    }
+
+    @Post('/driver/set-location')
+    @ApiOperation({ summary: 'Set location'})
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Set location',
+        type: CargoLocationDto
+    })
+    async setLocation(@Body() cargoLocationDto: CargoLocationDto,@AuthUser() user: User): Promise<CommonApiResponse<string>> {
+        const cargo = await this.cargoService.setLocation(cargoLocationDto);
+        return CommonApiResponse.success<string>(cargo);
     }
 
     @Put('/driver/start-transfer')

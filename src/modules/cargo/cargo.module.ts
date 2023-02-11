@@ -5,12 +5,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CargoProfile, } from './cargo.profile';
 import { Cargo } from './model/cargo.entity';
 import { Receiver } from './model/receiver.entity';
+import { CargoLocation } from './model/cargo-location.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature(
       [ 
         Cargo,
-        Receiver
+        Receiver,
+        CargoLocation
       ])
   ],
   controllers: [CargoController],

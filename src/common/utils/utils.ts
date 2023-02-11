@@ -10,7 +10,7 @@ export function convertToAsterisks(value: string): string {
 
 
 export function generateCode(): string {
-    return Math.random().toString(36).substring(2, 6).toUpperCase();
+    return Math.random().toString(36).substring(2, 8).toUpperCase();
 }
 
 export function setCargoStatus(status: number): CARGO_STATUS {
