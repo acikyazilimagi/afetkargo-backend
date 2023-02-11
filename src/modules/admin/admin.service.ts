@@ -35,7 +35,6 @@ export class AdminService {
     // queryBuilder.leftJoinAndMapOne('adv.advertisementType', AdvertisementType, 'advType', 'advType.id = adv.advertisementTypeId')
     // queryBuilder.leftJoinAndMapOne('adv.loadType', LoadType, 'loadType', 'loadType.id = adv.loadTypeId');
     // queryBuilder.leftJoinAndMapOne('adv.materialType', MaterialType, 'materialType', 'materialType.id = adv.materialTypeId');
-    // queryBuilder.leftJoinAndMapOne('adv.vehicle', Vehicle, 'vehicle', 'vehicle.id = adv.vehicleId');
     queryBuilder.leftJoinAndMapOne('cargo.destinationCity', City, 'destinationCity', 'destinationCity.id = cargo.destinationCityId');
     queryBuilder.leftJoinAndMapOne('cargo.destinationCounty', County, 'destinationCounty', 'destinationCounty.id = cargo.destinationCountyId');
 
@@ -59,13 +58,13 @@ export class AdminService {
 
     const paginatedCargo = await paginate<Cargo>(queryBuilder, options);
 
-    
+    console.log("paginatedKargo: ", paginatedCargo);
+
     if (!paginatedCargo.items) {
         throw new NotFoundException('Cargo list does not found');
     }
 
     const cargos = this.mapper.mapArray(paginatedCargo.items, Cargo, CargoDto);
-
     return new Pagination<CargoDto>(cargos, paginatedCargo.meta,paginatedCargo.links);
   }
 }

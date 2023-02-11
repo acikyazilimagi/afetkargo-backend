@@ -57,10 +57,10 @@ export class CargoDto extends BaseDto{
     receiverList: CreateReceiverDto[];
 
     @ApiProperty()
-    destinationCountyId: string;
+    destinationCountyId: number;
 
     @ApiProperty()
-    destinationCityId: string;
+    destinationCityId: number;
 
     @ApiProperty()
     @AutoMap()

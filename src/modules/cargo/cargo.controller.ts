@@ -31,7 +31,7 @@ export class CargoController {
     @ApiOperation({ summary: 'Create Cargo'})
     @HttpCode(HttpStatus.OK)
     @ApiSecurity('bearer')
-    @Auth([RoleType.USER, RoleType.ADMIN])
+    // @Auth([RoleType.USER, RoleType.ADMIN])
     @ApiResponse({
         status: HttpStatus.OK,
         description: 'Create cargo',

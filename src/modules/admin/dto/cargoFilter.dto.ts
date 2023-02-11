@@ -1,6 +1,5 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsPhoneNumber } from "class-validator";
 
 export class CargoFilterDto {
     @ApiProperty()
@@ -13,6 +12,5 @@ export class CargoFilterDto {
 
     @ApiProperty()
     @AutoMap()
-    @IsPhoneNumber("TR")
     driverPhone: string;
 }

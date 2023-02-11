@@ -79,11 +79,11 @@ export class Cargo extends BaseEntity{
 
     @Column({ nullable: true })
     @AutoMap()
-    destinationCountyId: string;
+    destinationCountyId: number;
 
     @Column({ nullable: true })
     @AutoMap()
-    destinationCityId: string;
+    destinationCityId: number;
 
     @Column({ nullable: true })
     @AutoMap()
