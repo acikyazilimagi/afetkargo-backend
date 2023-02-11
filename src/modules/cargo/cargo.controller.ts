@@ -96,6 +96,19 @@ export class CargoController {
         return CommonApiResponse.success<string>(cargo);
     }
 
+    @Get('/receiver/:id')
+    @ApiOperation({ summary: 'Get Location By CargoId'})
+    @HttpCode(HttpStatus.OK)
+    @ApiResponse({
+        status: HttpStatus.OK,
+        description: 'Get location by id',
+        type: CargoDto
+    })
+    async getLocationById(@Param('id') id: string): Promise<CommonApiResponse<CargoLocationDto>> {
+        const cargo = await this.cargoService.getLocation(id);
+        return CommonApiResponse.success<CargoLocationDto>(cargo);
+    }
+
     @Put('/driver/start-transfer')
     @ApiOperation({ summary: 'Start Transfer'})
     @HttpCode(HttpStatus.OK)

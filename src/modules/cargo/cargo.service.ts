@@ -150,4 +150,22 @@ export class CargoService {
         const savedLocation =  await this.cargoLocationRepository.save(location);
         return savedLocation.id;
     }
+
+    async getLocation(cargoId: string): Promise<CargoLocationDto> {
+        const cargo = await this.cargoRepository.findOne({where: {id: cargoId}});
+
+        if(!cargo) { 
+            throw new NotFoundException("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+        }
+
+        if((cargo.status != CARGO_STATUS.WAITING) && (cargo.status != CARGO_STATUS.TRANSFER)) {
+            throw new BadRequestException("Girilen bilgilere ait aktif kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+        }
+
+        let location = await this.cargoLocationRepository.findOne({where:{cargoId:cargo.id},order:{createdAt:"DESC"}});
+        if(!location){
+            throw new NotFoundException("Kargoya ait lokasyon bilgisi bulunamadı. Lütfen tekrar deneyin.");
+        }
+        return this.mapper.map(location, CargoLocation, CargoLocationDto);
+    }
 }
