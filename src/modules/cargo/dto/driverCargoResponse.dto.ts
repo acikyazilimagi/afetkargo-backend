@@ -45,5 +45,9 @@ export class DriverCargoResponse extends BaseDto{
     isActive: boolean;
 
     @ApiProperty()
+    @AutoMap()
+    status: number;
+
+    @ApiProperty()
     receiverList: ReceiverDto[];
 }
