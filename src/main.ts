@@ -33,8 +33,8 @@ async function bootstrap() {
   app.enableCors({
     origin: [
       'http://localhost:3000',
-      'https://api-test.afetkargo.com/',
-      'https://astonishing-naiad-b9cce7.netlify.app/'
+      'https://api-test.afetkargo.com',
+      'https://astonishing-naiad-b9cce7.netlify.app'
     ],
     methods: ["GET", "POST","PUT","DELETE"],
   });
