@@ -1,11 +1,10 @@
 import { Mapper } from '@automapper/core';
 import { InjectMapper } from '@automapper/nestjs';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CargoDto } from './dto/cargo.dto';
 import { CargoLocationDto } from './dto/cargoLocation.dto';
-import { ReceiverDto } from './dto/receiver.dto';
 import { Cargo } from './model/cargo.entity';
 import { Receiver } from './model/receiver.entity';
 import { CargoLocation } from './model/cargo-location.entity';
@@ -15,6 +14,8 @@ import { CARGO_STATUS } from 'src/common/constants';
 import { DriverCargoRequest } from './dto/driverCargoRequest.dto';
 import { FinishTransferRequest } from './dto/finishTransferRequest.dto';
 import { StartTransferRequest } from './dto/startTransferRequest.dto';
+import { CreateCargoDto } from './dto/createCargo.dto';
+import { CreateReceiverDto } from './dto/createReceiver.dto';
 
 @Injectable()
 export class CargoService {
@@ -30,19 +31,22 @@ export class CargoService {
         private readonly cargoLocationRepository: Repository<CargoLocation>,
     ) {}
 
-    async createCargo (cargoDto: CargoDto) : Promise<CargoResponse> {
-        let cargo = this.mapper.map(cargoDto, CargoDto,Cargo);
+    async createCargo (createCargoDto: CreateCargoDto) : Promise<CargoResponse> {
+        let cargo = this.mapper.map(createCargoDto, CreateCargoDto,Cargo);
 
+        // TODO cargo code for unique control 
         cargo.driverPassword = generateCode();
         cargo.receiverPassword = generateCode();
+        cargo.cargoCode = generateCode();
         cargo.status = CARGO_STATUS.WAITING;
         
 
         const savedCargo =  await this.cargoRepository.save(cargo);
 
+        console.log("Saved Cargo detail: ", savedCargo);
 
-        if (cargoDto.receiverList) {
-            const receivers = this.mapper.mapArray(cargoDto.receiverList, Receiver, ReceiverDto);
+        if (createCargoDto.receiverList) {
+            const receivers = this.mapper.mapArray(createCargoDto.receiverList, CreateReceiverDto, Receiver );
             receivers.forEach(receiver => { receiver.cargoId = savedCargo.id });
             await this.receiverRepository.save(receivers);
         }
@@ -73,11 +77,11 @@ export class CargoService {
         const cargo = await this.cargoRepository.findOne({where: {driverPassword: driverCargoRequest.driverPassword, plateNo: driverCargoRequest.plateNo}});
 
         if(!cargo) { 
-            throw new Error("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+            throw new NotFoundException("Girilen bilgilere ait kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
         }
 
         if((cargo.status != CARGO_STATUS.WAITING) && (cargo.status != CARGO_STATUS.TRANSFER)) {
-            throw new Error("Girilen bilgilere ait aktif kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
+            throw new BadRequestException("Girilen bilgilere ait aktif kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
         }
 
         //TODO: create maps url
@@ -118,6 +122,4 @@ export class CargoService {
         const savedLocation =  await this.cargoLocationRepository.save(location);
         return savedLocation.id;
     }
-    
-    
 }

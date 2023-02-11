@@ -9,6 +9,7 @@ import { CargoResponse } from './dto/cargoResponse.dto';
 import { DriverCargoRequest } from './dto/driverCargoRequest.dto';
 import { FinishTransferRequest } from './dto/finishTransferRequest.dto';
 import { StartTransferRequest } from './dto/startTransferRequest.dto';
+import { CreateCargoDto } from './dto/createCargo.dto';
 
 
 @UseGuards(AuthGuard('api-key'))
@@ -25,9 +26,9 @@ export class CargoController {
     @ApiResponse({
         status: HttpStatus.OK,
         description: 'Create cargo',
-        type: CargoDto
+        type: CargoResponse
     })
-    async createCargo(@Body() cargoDto: CargoDto): Promise<CommonApiResponse<CargoResponse>> {
+    async createCargo(@Body() cargoDto: CreateCargoDto): Promise<CommonApiResponse<CargoResponse>> {
         const cargo = await this.cargoService.createCargo(cargoDto);
         return CommonApiResponse.success<CargoResponse>(cargo);
     }
@@ -45,7 +46,7 @@ export class CargoController {
         return CommonApiResponse.success<CargoDto>(cargo);
     }
     
-    @Get('/driver/cargo')
+    @Post('/driver/cargo')
     @ApiOperation({ summary: 'Get Cargo By CargoId'})
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
@@ -53,6 +54,7 @@ export class CargoController {
         description: 'Get cargo by id',
         type: CargoDto
     })
+    // TODO Get requeste çevrilicek ve driver bilgileri middleware içeriisnde kontrol edilecek
     async getDriverCargo(@Body() driverCargoRequest: DriverCargoRequest ): Promise<CommonApiResponse<CargoDto>> {
         const cargo = await this.cargoService.getDriverCargo(driverCargoRequest);
         return CommonApiResponse.success<CargoDto>(cargo);
@@ -66,7 +68,7 @@ export class CargoController {
         description: 'Set location',
         type: CargoLocationDto
     })
-    async setLocation(@Body() cargoLocationDto: CargoLocationDto,@AuthUser() user: User): Promise<CommonApiResponse<string>> {
+    async setLocation(@Body() cargoLocationDto: CargoLocationDto): Promise<CommonApiResponse<string>> {
         const cargo = await this.cargoService.setLocation(cargoLocationDto);
         return CommonApiResponse.success<string>(cargo);
     }
