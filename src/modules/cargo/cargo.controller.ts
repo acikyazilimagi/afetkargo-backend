@@ -5,8 +5,6 @@ import { CargoService } from './cargo.service';
 import { CommonApiResponse } from 'src/common/base/base-api-response.dto';
 import { CargoDto } from './dto/cargo.dto';
 import { CargoLocationDto } from './dto/cargoLocation.dto';
-import { AuthUser } from 'src/common/decorators/auth-user.decorator';
-import { User } from '../user/model/user.entity';
 import { CargoResponse } from './dto/cargoResponse.dto';
 import { DriverCargoRequest } from './dto/driverCargoRequest.dto';
 import { FinishTransferRequest } from './dto/finishTransferRequest.dto';
@@ -21,19 +19,19 @@ export class CargoController {
         private cargoService: CargoService,
     ) {}
 
-    @Get('/driver/cargo')
-    @ApiOperation({ summary: 'Get Cargo By CargoId'})
+    @Post('')
+    @ApiOperation({ summary: 'Create Cargo'})
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
         status: HttpStatus.OK,
-        description: 'Get cargo by id',
+        description: 'Create cargo',
         type: CargoDto
     })
-    async getDriverCargo(@Body() driverCargoRequest: DriverCargoRequest ): Promise<CommonApiResponse<CargoDto>> {
-        const cargo = await this.cargoService.getDriverCargo(driverCargoRequest);
-        return CommonApiResponse.success<CargoDto>(cargo);
+    async createCargo(@Body() cargoDto: CargoDto): Promise<CommonApiResponse<CargoResponse>> {
+        const cargo = await this.cargoService.createCargo(cargoDto);
+        return CommonApiResponse.success<CargoResponse>(cargo);
     }
-
+    
     @Get(':id')
     @ApiOperation({ summary: 'Get Cargo By CargoId'})
     @HttpCode(HttpStatus.OK)
@@ -46,18 +44,18 @@ export class CargoController {
         const cargo = await this.cargoService.getCargo(id);
         return CommonApiResponse.success<CargoDto>(cargo);
     }
-
-    @Post('')
-    @ApiOperation({ summary: 'Create Cargo'})
+    
+    @Get('/driver/cargo')
+    @ApiOperation({ summary: 'Get Cargo By CargoId'})
     @HttpCode(HttpStatus.OK)
     @ApiResponse({
         status: HttpStatus.OK,
-        description: 'Create cargo',
+        description: 'Get cargo by id',
         type: CargoDto
     })
-    async createCargo(@Body() cargoDto: CargoDto,@AuthUser() user: User): Promise<CommonApiResponse<CargoResponse>> {
-        const cargo = await this.cargoService.createCargo(cargoDto);
-        return CommonApiResponse.success<CargoResponse>(cargo);
+    async getDriverCargo(@Body() driverCargoRequest: DriverCargoRequest ): Promise<CommonApiResponse<CargoDto>> {
+        const cargo = await this.cargoService.getDriverCargo(driverCargoRequest);
+        return CommonApiResponse.success<CargoDto>(cargo);
     }
 
     @Post('/driver/set-location')

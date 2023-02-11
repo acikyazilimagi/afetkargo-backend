@@ -10,11 +10,11 @@ export class CargoLocation extends BaseEntity{
     @AutoMap()
     cargoId: string;
 
-    @Column()
+    @Column({type: "decimal"})
     @AutoMap()
     lat: number;
 
-    @Column()
+    @Column({type: "decimal"})
     @AutoMap()
     long: number;
 }

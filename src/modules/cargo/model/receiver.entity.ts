@@ -22,11 +22,11 @@ export class Receiver extends BaseEntity{
     @AutoMap()
     destinationAddress: string;
 
-    @Column()
+    @Column({type: "decimal"})
     @AutoMap()
     destinationLat: number;
 
-    @Column()
+    @Column({type: "decimal"})
     @AutoMap()
     destinationLong: number;
 }
