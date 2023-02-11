@@ -89,9 +89,13 @@ export class CargoService {
             throw new BadRequestException("Girilen bilgilere ait aktif kargo bulunamadı. Lütfen bilgilerinizi kontrol edin.");
         }
 
-        //TODO: create maps url
+        let driverResponse=this.mapper.map(cargo, Cargo, DriverCargoResponse);
 
-        return this.mapper.map(cargo, Cargo, DriverCargoResponse);
+        let receiverList =await this.receiverRepository.find({where:{cargoId:cargo.id}});
+
+        driverResponse.receiverList=receiverList;
+
+        return driverResponse;
     }
 
     async getReceiverCargo(receiverCargoRequest: ReceiverCargoRequest): Promise<ReceiverCargoResponse> {
