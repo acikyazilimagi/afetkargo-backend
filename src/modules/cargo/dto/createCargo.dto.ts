@@ -53,8 +53,8 @@ export class CreateCargoDto{
     receiverList: CreateReceiverDto[];
 
     @ApiProperty()
-    countyId: string;
+    destinationCountyId: number;
 
     @ApiProperty()
-    cityId: string;
+    destinationCityId: number;
 }
