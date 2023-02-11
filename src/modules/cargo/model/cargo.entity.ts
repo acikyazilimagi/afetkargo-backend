@@ -29,11 +29,11 @@ export class Cargo extends BaseEntity{
     @AutoMap()
     destinationAddress: string;
 
-    @Column()
+    @Column({type: "decimal"})
     @AutoMap()
     originLat: number;
 
-    @Column()
+    @Column({ type: "decimal"})
     @AutoMap()
     originLong: number;
 
