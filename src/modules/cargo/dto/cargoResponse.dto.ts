@@ -7,6 +7,9 @@ export class CargoResponse {
     cargoId: string;
 
     @ApiProperty()
+    plateNo: string;
+
+    @ApiProperty()
     cargoCode: string;
 
     @ApiProperty()

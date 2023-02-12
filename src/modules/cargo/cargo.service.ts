@@ -41,6 +41,7 @@ export class CargoService {
 
         let cargoResponse = new CargoResponse();
         cargoResponse.cargoId = savedCargo.id;
+        cargoResponse.plateNo = savedCargo.plateNo;
         cargoResponse.cargoCode = savedCargo.cargoCode;
         cargoResponse.driverPassword = savedCargo.driverPassword;
         cargoResponse.receiverPassword = savedCargo.receiverPassword;
