@@ -13,6 +13,7 @@ import * as dotenv from 'dotenv';
 import { dotEnvOptions } from './common/config/dotenv-options';
 import { CargoModule } from './modules/cargo/cargo.module';
 import { AdminModule } from './modules/admin/admin.module';
+import { HealthModule } from './modules/health/health.module';
 dotenv.config(dotEnvOptions);
 
 @Module({
@@ -27,7 +28,8 @@ dotenv.config(dotEnvOptions);
     EmailerModule,
     CommonModule,
     CargoModule,
-    AdminModule
+    AdminModule,
+    HealthModule,
   ],
   providers: [
     {
