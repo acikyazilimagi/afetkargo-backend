@@ -10,10 +10,7 @@ import { UserDto } from "../user/dto/user.dto";
 import { User } from "../user/model/user.entity";
 import { UserService } from "../user/user.service";
 import { CommonApiResponse } from "../../common/base/base-api-response.dto";
-import { LoginPayloadDto } from "./dto/login-payload.dto";
-import { TokenPayloadDto } from "./dto/token-payload.dto";
-import { UserLoginDto } from "./dto/user-login.dto";
-import { UserRegisterDto } from "./dto/user-register.dto";
+import { UserLoginDto, UserRegisterDto, LoginPayloadDto, TokenPayloadDto } from "./dto";
 
 @Injectable()
 export class AuthService {

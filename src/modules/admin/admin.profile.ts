@@ -1,4 +1,4 @@
-import { createMap, Mapper } from '@automapper/core';
+import { Mapper } from '@automapper/core';
 import { AutomapperProfile, InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
 
@@ -10,7 +10,6 @@ export class AdminProfile extends AutomapperProfile {
 
   override get profile() {
     return (mapper) => {
-      // createMap(mapper, User, UserDto);
     };
   }
 }

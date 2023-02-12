@@ -1,14 +1,9 @@
-/*
-https://docs.nestjs.com/controllers#controllers
-*/
-
 import { Controller, Get, HttpCode, HttpStatus, Param, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation,ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CommonService } from './common.service';
-import { CityDto } from './dto/city.dto';
+import { CityDto, CountyDto } from './dto';
 import { CommonApiResponse } from 'src/common/base/base-api-response.dto';
-import { CountyDto } from './dto/county.dto';
 
 @UseGuards(AuthGuard('api-key'))
 @Controller('common')

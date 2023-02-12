@@ -1,13 +1,11 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from '../auth/strategies/jwt.strategy';
-import { ApiKeyStrategy } from '../auth/strategies/api-key.strategy';
+import { JwtStrategy, ApiKeyStrategy } from '../auth/strategies';
 import { UserModule } from '../user/user.module';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
 import { EmailerModule } from '../../common/services/emailer/emailer.module';
-import { DatabaseModule } from 'src/database/database.module';
+import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller';
 const passportModule = PassportModule.register({ defaultStrategy: 'jwt' });
 
 @Module({
