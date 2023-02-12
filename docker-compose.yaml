@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  afetkargo-backend-service:
+    container_name: afetkargo-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    deploy:
+      mode: replicated
+      replicas: 1
+    env_file:
+      - "./env/.env.dev"
