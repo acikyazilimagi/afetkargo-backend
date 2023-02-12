@@ -6,24 +6,17 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { User } from './model/user.entity';
 import { UserRegisterDto } from '../auth/dto/user-register.dto';
-import { UserDto } from './dto/user.dto';
 import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
 import { v4 as uuidv4 } from 'uuid';
 import { EmailerService } from 'src/common/services/emailer/emailer.service';
 import { CommonApiResponse } from '../../common/base/base-api-response.dto';
-import { ResetPasswordDto } from './dto/reset-password.dto';
-import { UpdatePasswordDto } from './dto/update-password.dto';
 import { validateHash } from 'src/common/utils/hash';
-import { ResetPasswordMailDto } from './dto/reset-password-mail.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Not, Repository } from 'typeorm';
-import { UserRole } from './model/user-role.entity';
-import { Role } from './model/role.entity';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { RoleDto } from './dto/role.dto';
+import { Role, UserRole, User } from './model';
+import { UpdateUserDto, RoleDto, ResetPasswordMailDto, UpdatePasswordDto, ResetPasswordDto, UserDto} from './dto';
 
 @Injectable()
 export class UserService {

@@ -1,6 +1,4 @@
-import { Role } from './model/role.entity';
-import { UserRole } from './model/user-role.entity';
-import { User } from './model/user.entity';
+import { UserRole, User } from './model';
 
 // export const userProviders = [
 //   {

@@ -5,7 +5,7 @@ import { Exception } from "../exceptions/exception";
 import { Request, Response } from "express";
 import { Logger } from "winston";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
-import { isArray, isObject } from "class-validator";
+import { isObject } from "class-validator";
 
 @Catch()
 export class NestHttpExceptionFilter implements ExceptionFilter {

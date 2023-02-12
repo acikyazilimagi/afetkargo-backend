@@ -5,11 +5,8 @@ import { UserController } from './user.controller';
 import { AuthModule } from '../auth/auth.module';
 import { UserProfile } from './user.profile';
 import { EmailerModule } from '../../common/services/emailer/emailer.module';
-import { UserRole } from './model/user-role.entity';
-import { Role } from './model/role.entity';
-import { User } from './model/user.entity';
+import { Role, User, UserRole } from './model';
 import { CommonModule } from '../common/common.module';
-import { FileUploadModule } from 'src/common/services/aws/file-upload.module';
 
 @Module({
     imports: [

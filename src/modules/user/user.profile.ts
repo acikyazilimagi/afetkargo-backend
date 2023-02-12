@@ -4,10 +4,8 @@ import { Injectable } from '@nestjs/common';
 import { BaseDto } from '../../common/base/base.dto';
 import { BaseEntity } from 'typeorm';
 import { UserRegisterDto } from '../auth/dto/user-register.dto';
-import { UserDto } from './dto/user.dto';
-import { User } from './model/user.entity';
-import { Role } from './model/role.entity';
-import { RoleDto } from './dto/role.dto';
+import { UserDto, RoleDto } from './dto';
+import { User, Role } from './model';
 
 @Injectable()
 export class UserProfile extends AutomapperProfile {

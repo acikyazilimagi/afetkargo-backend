@@ -27,3 +27,10 @@ export function setCargoStatus(status: number): CARGO_STATUS {
             return CARGO_STATUS.TRANSFERED_WITH_PROBLEM;
     }
 }
+
+export function hideUserCharacters(fullName: string): string {
+    const splitedFullName = fullName.split(" ");
+    const name = splitedFullName[0];
+    const surname = splitedFullName[splitedFullName.length - 1];
+    return `${name[0]}${"*".repeat(name.length - 1)} ${surname[0]}${"*".repeat(surname.length - 1)}`;
+}

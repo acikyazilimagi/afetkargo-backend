@@ -2,16 +2,10 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Put, UseGuard
 import { ApiTags, ApiOperation,ApiResponse, ApiSecurity } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { UserService } from './user.service';
-import { UserDto } from './dto/user.dto';
-import { CommonApiResponse } from '../../common/base/base-api-response.dto';
-import { UpdatePasswordDto } from './dto/update-password.dto';
-import { ResetPasswordDto } from './dto/reset-password.dto';
-import { AuthUser } from '../../common/decorators/auth-user.decorator';
+import { CommonApiResponse } from '../../common/base';
+import { AuthUser, Auth } from '../../common/decorators';
 import { User } from './model/user.entity';
-import { ResetPasswordMailDto } from './dto/reset-password-mail.dto';
-import { Auth } from '../../common/decorators/auth.decorator';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { RoleDto } from './dto/role.dto';
+import { UpdateUserDto, RoleDto, ResetPasswordMailDto, ResetPasswordDto, UpdatePasswordDto, UserDto } from './dto';
 
 @ApiTags('users')
 @Controller('users')
