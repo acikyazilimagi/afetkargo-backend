@@ -3,24 +3,11 @@ import { InjectMapper } from '@automapper/nestjs';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CargoDto } from './dto/cargo.dto';
-import { CargoLocationDto } from './dto/cargoLocation.dto';
-import { Cargo } from './model/cargo.entity';
-import { Receiver } from './model/receiver.entity';
-import { CargoLocation } from './model/cargo-location.entity';
+import { Cargo, Receiver, CargoLocation } from './model';
 import { generateCode, setCargoStatus } from 'src/common/utils/utils';
-import { CargoResponse } from './dto/cargoResponse.dto';
 import { CARGO_STATUS } from 'src/common/constants';
-import { DriverCargoRequest } from './dto/driverCargoRequest.dto';
-import { ReceiverCargoRequest } from './dto/receiverCargoRequest.dto';
-import { FinishTransferRequest } from './dto/finishTransferRequest.dto';
-import { StartTransferRequest } from './dto/startTransferRequest.dto';
-import { CreateCargoDto } from './dto/createCargo.dto';
-import { CreateReceiverDto } from './dto/createReceiver.dto';
-import { DriverCargoResponse } from './dto/driverCargoResponse.dto';
-import { ReceiverCargoResponse } from './dto/receiverCargoResponse.dto';
-import { User } from '../user/model/user.entity';
-import { CreateCargoLocationDto } from './dto/createCargoLocation.dto';
+import { User } from '../user/model';
+import { CargoDto, CargoLocationDto, CargoResponse, CreateCargoDto, CreateCargoLocationDto, CreateReceiverDto, DriverCargoRequest, DriverCargoResponse, FinishTransferRequest, ReceiverCargoRequest, ReceiverCargoResponse, StartTransferRequest } from './dto';
 
 @Injectable()
 export class CargoService {

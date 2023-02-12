@@ -3,9 +3,7 @@ import { CargoController } from './cargo.controller';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CargoProfile, } from './cargo.profile';
-import { Cargo } from './model/cargo.entity';
-import { Receiver } from './model/receiver.entity';
-import { CargoLocation } from './model/cargo-location.entity';
+import { CargoLocation, Receiver, Cargo } from './model';
 @Module({
   imports: [
     TypeOrmModule.forFeature(

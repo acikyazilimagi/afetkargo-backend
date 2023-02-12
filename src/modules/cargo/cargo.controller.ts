@@ -3,22 +3,11 @@ import { ApiTags, ApiOperation,ApiResponse,ApiSecurity } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CargoService } from './cargo.service';
 import { CommonApiResponse } from 'src/common/base/base-api-response.dto';
-import { CargoDto } from './dto/cargo.dto';
-import { CargoLocationDto } from './dto/cargoLocation.dto';
-import { CargoResponse } from './dto/cargoResponse.dto';
-import { DriverCargoRequest } from './dto/driverCargoRequest.dto';
-import { ReceiverCargoRequest } from './dto/receiverCargoRequest.dto';
-import { FinishTransferRequest } from './dto/finishTransferRequest.dto';
-import { StartTransferRequest } from './dto/startTransferRequest.dto';
-import { CreateCargoDto } from './dto/createCargo.dto';
-import { DriverCargoResponse } from './dto/driverCargoResponse.dto';
-import { ReceiverCargoResponse } from './dto/receiverCargoResponse.dto';
 import { Auth } from 'src/common/decorators/auth.decorator';
 import { RoleType } from 'src/common/constants';
 import { AuthUser } from 'src/common/decorators/auth-user.decorator';
 import { User } from '../user/model/user.entity';
-import { CreateCargoLocationDto } from './dto/createCargoLocation.dto';
-
+import { CargoDto, CargoLocationDto,CreateCargoLocationDto, CargoResponse, CreateCargoDto, DriverCargoRequest, DriverCargoResponse, FinishTransferRequest, ReceiverCargoRequest, ReceiverCargoResponse, StartTransferRequest } from './dto';
 
 @UseGuards(AuthGuard('api-key'))
 @Controller('cargo')
