@@ -1,19 +1,14 @@
-import { CommonModule } from './modules/common/common.module';
 import { classes } from '@automapper/classes';
 import { AutomapperModule } from '@automapper/nestjs';
 import { Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
-import { NestHttpExceptionFilter } from './common/filters/exception.filter';
+import * as dotenv from 'dotenv';
+import { NestHttpExceptionFilter } from './common/exceptions/exception.filter';
 import { LoggerModule } from './common/logger/logger.module';
 import { EmailerModule } from './common/services/emailer/emailer.module';
-import { DatabaseModule } from './database/database.module';
-import { AuthModule } from './modules/auth/auth.module';
-import { UserModule } from './modules/user/user.module';
-import * as dotenv from 'dotenv';
 import { dotEnvOptions } from './common/config/dotenv-options';
-import { CargoModule } from './modules/cargo/cargo.module';
-import { AdminModule } from './modules/admin/admin.module';
-import { HealthModule } from './modules/health/health.module';
+import { DatabaseModule } from './database/database.module';
+import { CommonModule, AuthModule, UserModule, CargoModule, AdminModule, HealthModule } from './modules';
 dotenv.config(dotEnvOptions);
 
 @Module({

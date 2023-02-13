@@ -2,10 +2,10 @@ import { VersioningType } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as dotenv from 'dotenv';
-import { dotEnvOptions } from './common/config/dotenv-options';
-import { AppModule } from './app.module';
-import { morganLogger } from './common/logger/morgan.logger';
 import  helmet from 'helmet';
+import { AppModule } from './app.module';
+import { dotEnvOptions } from './common/config/dotenv-options';
+import { morganLogger } from './common/logger/morgan.logger';
 import { ValidationPipe } from './common/pipes/classValidator.pipe';
 
 dotenv.config(dotEnvOptions);
