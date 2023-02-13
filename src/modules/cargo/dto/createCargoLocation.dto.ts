@@ -1,6 +1,6 @@
 import { AutoMap } from "@automapper/classes";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDecimal, IsLatitude, IsLongitude, isLongitude} from "class-validator";
+import { IsLatitude, IsLongitude} from "class-validator";
 
 export class CreateCargoLocationDto {
     @ApiProperty()

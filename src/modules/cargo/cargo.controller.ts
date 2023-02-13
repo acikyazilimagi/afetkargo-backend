@@ -3,9 +3,8 @@ import { ApiTags, ApiOperation,ApiResponse,ApiSecurity } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { CargoService } from './cargo.service';
 import { CommonApiResponse } from 'src/common/base/base-api-response.dto';
-import { Auth } from 'src/common/decorators/auth.decorator';
 import { RoleType } from 'src/common/constants';
-import { AuthUser } from 'src/common/decorators/auth-user.decorator';
+import { AuthUser, Auth } from 'src/common/decorators';
 import { User } from '../user/model/user.entity';
 import { CargoDto, CargoLocationDto,CreateCargoLocationDto, CargoResponse, CreateCargoDto, DriverCargoRequest, DriverCargoResponse, FinishTransferRequest, ReceiverCargoRequest, ReceiverCargoResponse, StartTransferRequest } from './dto';
 

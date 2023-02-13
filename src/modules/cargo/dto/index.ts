@@ -11,3 +11,4 @@ export * from  "./receiver.dto";
 export * from  "./receiverCargoRequest.dto";
 export * from  "./receiverCargoResponse.dto";
 export * from  "./startTransferRequest.dto";
+export * from "./cargoFilter.dto";

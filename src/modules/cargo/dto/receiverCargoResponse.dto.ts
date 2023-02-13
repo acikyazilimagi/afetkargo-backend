@@ -3,7 +3,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { BaseDto } from "src/common/base/base.dto";
 import { ReceiverDto } from "./receiver.dto";
 
-export class ReceiverCargoResponse extends BaseDto{
+export class ReceiverCargoResponse extends BaseDto {
 
     @ApiProperty()
     @AutoMap()

@@ -1,8 +1,7 @@
-import { BaseEntity } from "../../../common/base/base.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne} from "typeorm";
 import { AutoMap } from "@automapper/classes";
-import { County } from "src/modules/common/model/county.entity";
-import { City } from "src/modules/common/model/city.entity";
+import { BaseEntity } from "../../../common/base/base.entity";
+import { County, City } from "src/modules/common/model";
 import { User } from "src/modules/user/model/user.entity";
 
 @Entity()

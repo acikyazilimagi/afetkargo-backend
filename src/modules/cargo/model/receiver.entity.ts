@@ -2,7 +2,6 @@ import { BaseEntity } from "../../../common/base/base.entity";
 import { Column, Entity} from "typeorm";
 import { AutoMap } from "@automapper/classes";
 
-
 @Entity()
 export class Receiver extends BaseEntity{
     
