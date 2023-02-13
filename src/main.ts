@@ -35,7 +35,10 @@ async function bootstrap() {
     origin: [
       'http://localhost:3000',
       'https://api-test.afetkargo.com',
-      'https://astonishing-naiad-b9cce7.netlify.app'
+      'https://astonishing-naiad-b9cce7.netlify.app',
+      'https://www.afetkargo.com',
+      'https://afetkargo.com',
+      'https://test.afetkargo.com',
     ],
     methods: ["GET", "POST","PUT","DELETE"],
   });
