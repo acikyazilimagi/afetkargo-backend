@@ -3,10 +3,8 @@ import { InjectMapper } from '@automapper/nestjs';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CityDto } from './dto/city.dto';
-import { CountyDto } from './dto/county.dto';
-import { City } from './model/city.entity';
-import { County } from './model/county.entity';
+import { CityDto, CountyDto } from './dto';
+import { City, County } from './model';
 
 @Injectable()
 export class CommonService {

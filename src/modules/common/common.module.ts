@@ -1,10 +1,9 @@
-import { CommonService } from './common.service';
-import { CommonController } from './common.controller';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommonService } from './common.service';
+import { CommonController } from './common.controller';
 import { CommonProfile } from './common.profile';
-import { County } from './model/county.entity';
-import { City } from './model/city.entity';
+import { County, City } from './model';
 
 @Module({
   imports: [

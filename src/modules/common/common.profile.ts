@@ -1,13 +1,10 @@
 import { createMap, Mapper } from "@automapper/core";
 import { AutomapperProfile, InjectMapper } from "@automapper/nestjs";
+import { BaseEntity } from "typeorm";
 import { Injectable } from "@nestjs/common";
 import { BaseDto } from "../../common/base/base.dto";
-import { BaseEntity } from "typeorm";
-import { CityDto } from "./dto/city.dto";
-import { CountyDto } from "./dto/county.dto";
-import { City } from "./model/city.entity";
-import { County } from "./model/county.entity";
-import { Cargo } from "../cargo/model/cargo.entity";
+import { CityDto, CountyDto } from "./dto";
+import { City, County } from "./model";
 
 @Injectable()
 export class CommonProfile extends AutomapperProfile {
