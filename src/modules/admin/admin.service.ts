@@ -1,25 +1,19 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectMapper } from '@automapper/nestjs';
 import { Mapper } from '@automapper/core';
-import { EmailerService } from 'src/common/services/emailer/emailer.service';
-import { FileUploadService } from 'src/common/services/aws/file-upload.service';
-import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
-import { CargoDto } from '../cargo/dto/cargo.dto';
-import { Receiver } from '../cargo/model/receiver.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Cargo } from '../cargo/model/cargo.entity';
 import { Repository } from 'typeorm';
-import { CargoFilterDto } from './dto/cargoFilter.dto';
+import { IPaginationOptions, paginate, Pagination } from 'nestjs-typeorm-paginate';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Cargo, Receiver } from '../cargo/model';
+import { CargoFilterDto, CargoDto } from '../cargo/dto';
 import { User } from '../user/model/user.entity';
-import { City } from '../common/model/city.entity';
-import { County } from '../common/model/county.entity';
+import { City, County } from '../common/model';
 
 @Injectable()
 export class AdminService {
   constructor(
     @InjectMapper()
     private readonly mapper: Mapper,
-    private readonly emailerService: EmailerService,
     @InjectRepository(Cargo)
     private readonly cargoRepository: Repository<Cargo>,
     @InjectRepository(Receiver)
@@ -33,21 +27,21 @@ export class AdminService {
     queryBuilder.leftJoinAndMapOne('cargo.destinationCity', City, 'destinationCity', 'destinationCity.id = cargo.destinationCityId');
     queryBuilder.leftJoinAndMapOne('cargo.destinationCounty', County, 'destinationCounty', 'destinationCounty.id = cargo.destinationCountyId');
 
-    // if(filter)
-    // {
-    //     if(filter.plateNo)
-    //     {
-    //         queryBuilder.andWhere('cargo.plateNo = :plateNo', {plateNo: filter.plateNo});
-    //     }
-    //     if(filter.driverFullName)
-    //     {
-    //         queryBuilder.andWhere('cargo.driverFullName = :driverFullName', {driverFullName: filter.driverFullName});
-    //     }
-    //     if(filter.driverPhone)
-    //     {
-    //         queryBuilder.andWhere('cargo.driverPhone = :driverPhone', {driverPhone: filter.driverPhone});
-    //     }
-    // }
+    if(filter)
+    {
+        if(filter.plateNo)
+        {
+            queryBuilder.andWhere('cargo.plateNo = :plateNo', {plateNo: filter.plateNo});
+        }
+        if(filter.driverFullName)
+        {
+            queryBuilder.andWhere('cargo.driverFullName = :driverFullName', {driverFullName: filter.driverFullName});
+        }
+        if(filter.driverPhone)
+        {
+            queryBuilder.andWhere('cargo.driverPhone = :driverPhone', {driverPhone: filter.driverPhone});
+        }
+    }
 
     queryBuilder.orderBy('cargo.createdAt', 'DESC');
 

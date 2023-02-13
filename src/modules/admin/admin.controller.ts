@@ -1,15 +1,13 @@
 import { Body, Controller, DefaultValuePipe, HttpCode, HttpStatus, ParseIntPipe, Post,Query, UseGuards } from '@nestjs/common';
-import { ApiTags,ApiOkResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOkResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
+import { Pagination } from 'nestjs-typeorm-paginate';
 import { AdminService } from './admin.service';
-import { Auth } from 'src/common/decorators/auth.decorator';
+import { Auth, AuthUser } from 'src/common/decorators';
 import { RoleType } from 'src/common/constants';
 import { User } from '../user/model/user.entity';
-import { AuthUser } from 'src/common/decorators/auth-user.decorator';
-import { Pagination } from 'nestjs-typeorm-paginate';
-import { CargoFilterDto } from './dto/cargoFilter.dto';
 import { CommonApiResponse } from 'src/common/base/base-api-response.dto';
-import { CargoDto } from '../cargo/dto';
+import { CargoDto, CargoFilterDto } from '../cargo/dto';
 
 @ApiTags('admin')
 @Controller('admin')

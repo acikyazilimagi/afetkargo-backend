@@ -6,8 +6,7 @@ import { User } from '../user/model/user.entity';
 import { AdminController } from './admin.controller';
 import { AdminService } from './admin.service';
 import { AdminProfile } from './admin.profile';
-import { Cargo } from '../cargo/model/cargo.entity';
-import { Receiver } from '../cargo/model/receiver.entity';
+import { Cargo, Receiver } from '../cargo/model';
 
 @Module({
     imports: [
