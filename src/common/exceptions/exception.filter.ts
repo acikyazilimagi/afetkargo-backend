@@ -1,7 +1,7 @@
 import { ArgumentsHost, BadRequestException, Catch, ConflictException, ExceptionFilter, HttpException, Inject, NotFoundException, UnauthorizedException } from "@nestjs/common";
 import { CommonApiResponse } from "../base/base-api-response.dto";
 import { ResponseCode } from "../constants";
-import { Exception } from "../exceptions/exception";
+import { Exception } from "./exception";
 import { Request, Response } from "express";
 import { Logger } from "winston";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";

@@ -13,5 +13,4 @@ export class BaseDto {
 
     @ApiProperty()
     updatedAt: Date;
-
 }
