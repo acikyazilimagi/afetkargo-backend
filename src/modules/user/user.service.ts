@@ -6,16 +6,17 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserRegisterDto } from '../auth/dto/user-register.dto';
-import { InjectMapper } from '@automapper/nestjs';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Not, Repository } from 'typeorm';
 import { Mapper } from '@automapper/core';
 import { v4 as uuidv4 } from 'uuid';
+import { InjectMapper } from '@automapper/nestjs';
+import { UserRegisterDto } from '../auth/dto/user-register.dto';
 import { EmailerService } from 'src/common/services/emailer/emailer.service';
 import { CommonApiResponse } from '../../common/base/base-api-response.dto';
 import { validateHash } from 'src/common/utils/hash';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Not, Repository } from 'typeorm';
 import { Role, UserRole, User } from './model';
+import { RoleTypeEnum } from 'src/common/constants';
 import { UpdateUserDto, RoleDto, ResetPasswordMailDto, UpdatePasswordDto, ResetPasswordDto, UserDto} from './dto';
 
 @Injectable()
@@ -43,13 +44,13 @@ export class UserService {
     });
     if (existUser) {
       throw new ConflictException(
-        'User email or registery no is already exist',
+        'User email is already exist',
       );
     }
     const mappedUser = this.mapper.map(userRegisterDto, UserRegisterDto, User);
     mappedUser.isActive = true;
     const createdUser = await this.userRepository.save(mappedUser);
-    await this.createBasicRole(createdUser.id, userRegisterDto.roleId);
+    await this.createBasicRole(createdUser.id, RoleTypeEnum.USER);
     return createdUser;
   }
 

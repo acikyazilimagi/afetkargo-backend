@@ -4,3 +4,10 @@ export enum RoleType {
     USER = 'user',
     ADMIN = 'admin',
 }
+
+export enum RoleTypeEnum {
+    ADMIN = 1,
+    USER = 2, 
+    DRIVER = 3,
+    RECEIVER = 4
+}
