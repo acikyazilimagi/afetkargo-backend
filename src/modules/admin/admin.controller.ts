@@ -7,7 +7,7 @@ import { Auth, AuthUser } from 'src/common/decorators';
 import { RoleType } from 'src/common/constants';
 import { User } from '../user/model/user.entity';
 import { CommonApiResponse } from 'src/common/base/base-api-response.dto';
-import { CargoDto, CargoFilterDto } from '../cargo/dto';
+import { CargoDto, CargoFilterDto, ReceiverDto } from '../cargo/dto';
 
 @ApiTags('admin')
 @Controller('admin')
@@ -20,7 +20,7 @@ export class AdminController {
     @Post("cargo")
     @HttpCode(HttpStatus.OK)
     @Auth([RoleType.ADMIN])
-    @ApiOkResponse({ type: CargoDto , description: 'Get Cargo List' })
+    @ApiOkResponse({ type: Pagination<CargoDto> , description: 'Get Cargo List' })
     async getPaginatedCargos(
         @Body() filter: CargoFilterDto, 
         @AuthUser() user: User,
@@ -34,16 +34,12 @@ export class AdminController {
 
     @Post("receiver")
     @HttpCode(HttpStatus.OK)
-    @ApiOkResponse({ type: CargoDto , description: 'Get Cargo List' })
+    @ApiOkResponse({ isArray: true, type: ReceiverDto , description: 'Get Receiver List By Cargo Id' })
     @Auth([RoleType.ADMIN])
     async getCargoReceivers(
-        @Body() filter: CargoFilterDto, 
-        @AuthUser() user: User,
-        @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number = 1,
-        @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number = 10,
-    ): Promise<CommonApiResponse<Pagination<CargoDto>>> {
-        limit = limit > 100 ? 100 : limit;
-        const cargos = await this.adminService.getPaginatedCargos({ page, limit, route:  'advertisement' }, user, filter);
-        return CommonApiResponse.success<Pagination<CargoDto>>(cargos);
+        @Query('cargoId') cargoId: string,
+    ): Promise<CommonApiResponse<ReceiverDto[]>> {
+        const receivers = await this.adminService.getReceiversByCargoId(cargoId);
+        return CommonApiResponse.success<ReceiverDto[]>(receivers);
     }
 }
