@@ -23,6 +23,11 @@ export class CargoService {
     ) {}
 
     async createCargo (user: User,createCargoDto: CreateCargoDto) : Promise<CargoResponse> {
+
+        var existedCargo = await this.cargoRepository.findOne({ plateNo: createCargoDto.plateNo.toUpperCase(), status: CARGO_STATUS.WAITING || CARGO_STATUS.TRANSFER});
+        if(existedCargo) {
+            throw new BadRequestException(`Plate number with ${existedCargo.plateNo} is already in progress.`);
+        }
         let cargo = this.mapper.map(createCargoDto, CreateCargoDto,Cargo);
 
         // TODO cargo code for unique control 
