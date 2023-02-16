@@ -57,6 +57,7 @@ export class AdminController {
         description: 'Get location by id',
         type: CargoLocationDto
     })
+    @Auth([RoleType.ADMIN])
     async getLocationById(@Param('cargoId') cargoId: string): Promise<CommonApiResponse<CargoLocationDto>> {
         const cargo = await this.adminService.getCargoLocationById(cargoId);
         return CommonApiResponse.success<CargoLocationDto>(cargo);
