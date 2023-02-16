@@ -39,13 +39,9 @@ export class AdminService {
 
     if(filter)
     {
-        if(filter.plateNo)
+        if(filter.searchKey && filter.searchKey.length > 0)
         {
-            queryBuilder.andWhere('cargo.plateNo = :plateNo', {plateNo: filter.plateNo});
-        }
-        if(filter.driverPhone)
-        {
-            queryBuilder.andWhere('cargo.driverPhone = :driverPhone', {driverPhone: filter.driverPhone});
+            queryBuilder.andWhere('cargo.plateNo = :searchKey OR cargo.driverPhone = :searchKey', {searchKey: filter.searchKey});
         }
     }
 

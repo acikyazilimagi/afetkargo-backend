@@ -20,11 +20,13 @@ export function setCargoStatus(status: number): CARGO_STATUS {
         case 2:
             return CARGO_STATUS.TRANSFER;
         case 3:
-            return CARGO_STATUS.TRANSFERED;
+            return CARGO_STATUS.TRANSFERED_BY_DRIVER;
         case 4:
-            return CARGO_STATUS.CANCEL;
+            return CARGO_STATUS.RECEIVED;
         case 5:
-            return CARGO_STATUS.TRANSFERED_WITH_PROBLEM;
+            return CARGO_STATUS.RECEIVED_WITH_PROBLEM;
+        case 6:
+            return CARGO_STATUS.NOT_RECEIVED;
     }
 }
 
