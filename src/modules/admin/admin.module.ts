@@ -8,12 +8,14 @@ import { AdminService } from './admin.service';
 import { AdminProfile } from './admin.profile';
 import { Cargo } from '../cargo/model/cargo.entity';
 import { Receiver } from '../cargo/model/receiver.entity';
+import { CargoModule } from '../cargo/cargo.module';
 
 @Module({
     imports: [
         EmailerModule,
         TypeOrmModule.forFeature([User, Cargo, Receiver]),
         forwardRef(() => AuthModule),
+        CargoModule
     ],
     providers: [AdminService, AdminProfile,],
     controllers: [AdminController],

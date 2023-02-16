@@ -1,4 +1,4 @@
-import { IsEmail, IsMobilePhone, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsOptional, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { AutoMap } from '@automapper/classes';
 
@@ -40,6 +40,7 @@ export class UserRegisterDto {
 
   @ApiProperty()
   @IsString()
+  @IsOptional()
   @MaxLength(50)
   @AutoMap()
   companyName: string;

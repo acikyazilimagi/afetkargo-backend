@@ -1,5 +1,5 @@
-import { Body, Controller, DefaultValuePipe, HttpCode, HttpStatus, ParseIntPipe, Post,Query, UseGuards } from '@nestjs/common';
-import { ApiTags,ApiOkResponse } from '@nestjs/swagger';
+import { Body, Controller, DefaultValuePipe, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post,Query, UseGuards } from '@nestjs/common';
+import { ApiTags,ApiOkResponse, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { AdminService } from './admin.service';
 import { Auth } from 'src/common/decorators/auth.decorator';
@@ -9,7 +9,7 @@ import { AuthUser } from 'src/common/decorators/auth-user.decorator';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { CargoFilterDto } from './dto/cargoFilter.dto';
 import { CommonApiResponse } from 'src/common/base/base-api-response.dto';
-import { CargoDto } from '../cargo/dto';
+import { CargoDto, CargoLocationDto } from '../cargo/dto';
 
 @ApiTags('admin')
 @Controller('admin')
@@ -47,5 +47,18 @@ export class AdminController {
         limit = limit > 100 ? 100 : limit;
         const cargos = await this.adminService.getPaginatedCargos({ page, limit, route:  'advertisement' }, user, filter);
         return CommonApiResponse.success<Pagination<CargoDto>>(cargos);
+    }
+
+    @Get('/cargo-location/:cargoId')
+    @ApiOperation({ summary: 'Get Location By CargoId'})
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({
+        status: HttpStatus.OK,
+        description: 'Get location by id',
+        type: CargoLocationDto
+    })
+    async getLocationById(@Param('cargoId') cargoId: string): Promise<CommonApiResponse<CargoLocationDto>> {
+        const cargo = await this.adminService.getCargoLocationById(cargoId);
+        return CommonApiResponse.success<CargoLocationDto>(cargo);
     }
 }

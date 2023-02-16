@@ -13,6 +13,9 @@ import { CargoFilterDto } from './dto/cargoFilter.dto';
 import { User } from '../user/model/user.entity';
 import { City } from '../common/model/city.entity';
 import { County } from '../common/model/county.entity';
+import { CargoService } from '../cargo/cargo.service';
+import { CargoLocationDto } from '../cargo/dto';
+import { CommonApiResponse } from 'src/common/base';
 
 @Injectable()
 export class AdminService {
@@ -24,6 +27,7 @@ export class AdminService {
     private readonly cargoRepository: Repository<Cargo>,
     @InjectRepository(Receiver)
     private readonly receiverRepository: Repository<Receiver>,
+    private readonly cargoService:CargoService,
   ) {}
 
   async getPaginatedCargos(options: IPaginationOptions, user: User, filter: CargoFilterDto ): Promise<Pagination<CargoDto>> {
@@ -33,21 +37,17 @@ export class AdminService {
     queryBuilder.leftJoinAndMapOne('cargo.destinationCity', City, 'destinationCity', 'destinationCity.id = cargo.destinationCityId');
     queryBuilder.leftJoinAndMapOne('cargo.destinationCounty', County, 'destinationCounty', 'destinationCounty.id = cargo.destinationCountyId');
 
-    // if(filter)
-    // {
-    //     if(filter.plateNo)
-    //     {
-    //         queryBuilder.andWhere('cargo.plateNo = :plateNo', {plateNo: filter.plateNo});
-    //     }
-    //     if(filter.driverFullName)
-    //     {
-    //         queryBuilder.andWhere('cargo.driverFullName = :driverFullName', {driverFullName: filter.driverFullName});
-    //     }
-    //     if(filter.driverPhone)
-    //     {
-    //         queryBuilder.andWhere('cargo.driverPhone = :driverPhone', {driverPhone: filter.driverPhone});
-    //     }
-    // }
+    if(filter)
+    {
+        if(filter.plateNo)
+        {
+            queryBuilder.andWhere('cargo.plateNo = :plateNo', {plateNo: filter.plateNo});
+        }
+        if(filter.driverPhone)
+        {
+            queryBuilder.andWhere('cargo.driverPhone = :driverPhone', {driverPhone: filter.driverPhone});
+        }
+    }
 
     queryBuilder.orderBy('cargo.createdAt', 'DESC');
 
@@ -60,6 +60,11 @@ export class AdminService {
     }
 
     const cargos = this.mapper.mapArray(paginatedCargo.items, Cargo, CargoDto);
+
     return new Pagination<CargoDto>(cargos, paginatedCargo.meta,paginatedCargo.links);
+  }
+
+  async getCargoLocationById(id: string): Promise<CargoLocationDto> {
+      return this.cargoService.getLocation(id);
   }
 }
